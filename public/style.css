@@ -159,35 +159,46 @@ body::before {
 }
 .tbtn:hover { background: var(--raise); }
 .tbtn svg { width: 16px; height: 16px; }
-/* The language switch: a track with both languages and a thumb that slides to the current one.
-   The whole switch is one button. */
-.langs {
-  position: relative; flex: 0 0 auto; display: inline-flex;
-  padding: 2px; border: 0; border-radius: var(--r);
-  background: var(--field);
-  font: 700 11px/1 var(--f-body); letter-spacing: .04em;
+/* The language and theme buttons: toolbar buttons, as on the MyFox toolbar. The language one
+   says the current language, the theme one shows the current theme; each opens a menu. */
+html[data-lang="ru"] #lang-btn .en, html[data-lang="en"] #lang-btn .ru { display: none; }
+#lang-btn { min-width: 28px; }
+#theme-btn .moon { display: none; }
+:root[data-theme="dark"] #theme-btn .sun { display: none; }
+:root[data-theme="dark"] #theme-btn .moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) #theme-btn .sun { display: none; }
+  :root:not([data-theme="light"]) #theme-btn .moon { display: block; }
+}
+.tbtn[aria-expanded="true"] { background: var(--raise); }
+
+/* A menu as in MyFox: the panel's colors, the one radius, items edge to edge with room above
+   and below them only, a fill under the pointer, a check at the current item. */
+.pop { position: relative; flex: 0 0 auto; }
+.menu {
+  position: absolute; z-index: 100; top: calc(100% + 6px); right: 0;
+  min-width: 132px; padding: 4px 0;
+  background: var(--field); color: var(--text);
+  border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: 0 4px 12px var(--shadow), 0 0 3px rgba(0, 0, 0, .3);
+}
+.menu[hidden] { display: none; }
+.menu button {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 5px 14px 5px 10px; border: 0;
+  background: none; color: inherit; text-align: left;
+  font: 400 13px/1.3 var(--f-body);
   cursor: pointer;
 }
-.langs::before {
-  content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px);
-  border-radius: calc(var(--r) - 1px);
-  background: var(--raise);
-  transition: transform .25s ease;
+.menu button::before {
+  content: ""; flex: 0 0 auto; width: 12px; height: 12px;
 }
-html[data-lang="en"] .langs::before { transform: translateX(100%); }
-.langs span {
-  position: relative; z-index: 1;
-  width: 28px; height: 22px;
-  display: inline-flex; align-items: center; justify-content: center;
-  color: var(--muted); opacity: .6;
-  transition: color .25s, opacity .25s;
+.menu button[aria-checked="true"]::before {
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5 4.8 9 10 3' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5 4.8 9 10 3' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-html[data-lang="ru"] .langs .ru,
-html[data-lang="en"] .langs .en { color: var(--text); opacity: 1; }
-.langs:hover span { opacity: .85; }
-html[data-lang="ru"] .langs:hover .ru,
-html[data-lang="en"] .langs:hover .en { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .langs::before, .langs span { transition: none; } }
+.menu button:hover, .menu button:focus-visible { background: var(--raise); outline: none; }
 
 /* ---------- page card ---------- */
 .page {

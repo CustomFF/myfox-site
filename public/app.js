@@ -26,27 +26,75 @@
     });
   }
 
-  // Both languages are on the switch, the current one is lit; a click anywhere on it flips the language.
   function markLang() {
     var d = document.querySelector('meta[name="description"]');
     d.content = root.dataset.lang === "ru"
       ? "MyFox — инструментарий для установки и сопровождения официального Firefox с MyFox tweaks."
       : "MyFox is a toolkit for installing and maintaining the official Firefox with MyFox tweaks.";
   }
-  document.getElementById("lang-switch").addEventListener("click", function () {
-    var lang = root.dataset.lang === "ru" ? "en" : "ru";
-    root.dataset.lang = lang; root.lang = lang;
-    store("lang", lang, systemLang());
-    markLang();
-    syncShots();
-  });
   markLang();
-  document.getElementById("theme-btn").addEventListener("click", function () {
-    var next = theme() === "dark" ? "light" : "dark";
-    if (next === systemTheme()) delete root.dataset.theme;
-    else root.dataset.theme = next;
-    store("theme", next, systemTheme());
-    syncShots();
+
+  // The language and theme buttons open menus, as on the MyFox toolbar; the current item is checked.
+  function markMenus() {
+    document.querySelectorAll(".menu [data-lang]").forEach(function (b) {
+      b.setAttribute("aria-checked", String(b.dataset.lang === root.dataset.lang));
+    });
+    document.querySelectorAll(".menu [data-theme]").forEach(function (b) {
+      b.setAttribute("aria-checked", String(b.dataset.theme === theme()));
+    });
+  }
+  function closeMenus() {
+    document.querySelectorAll(".pop > .tbtn").forEach(function (b) {
+      b.setAttribute("aria-expanded", "false");
+      b.nextElementSibling.hidden = true;
+    });
+  }
+  document.querySelectorAll(".pop > .tbtn").forEach(function (btn) {
+    var menu = btn.nextElementSibling;
+    btn.addEventListener("click", function () {
+      var open = menu.hidden;
+      closeMenus();
+      if (!open) return;
+      markMenus();
+      menu.hidden = false;
+      btn.setAttribute("aria-expanded", "true");
+      (menu.querySelector('[aria-checked="true"]') || menu.firstElementChild).focus();
+    });
+    // Inside a menu the arrows move between its items and do not turn slides.
+    menu.addEventListener("keydown", function (e) {
+      var items = Array.prototype.slice.call(menu.children);
+      var i = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus();
+      } else if (e.key === "Escape") {
+        closeMenus(); btn.focus();
+      } else if (e.key !== "Enter" && e.key !== " " && e.key !== "Tab") return;
+      if (e.key !== "Tab") e.preventDefault();
+      if (e.key === "Enter" || e.key === " ") document.activeElement.click();
+      e.stopPropagation();
+    });
+  });
+  addEventListener("pointerdown", function (e) { if (!e.target.closest(".pop")) closeMenus(); });
+  addEventListener("keydown", function (e) { if (e.key === "Escape") closeMenus(); });
+  document.querySelectorAll(".menu [data-lang]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var lang = b.dataset.lang;
+      root.dataset.lang = lang; root.lang = lang;
+      store("lang", lang, systemLang());
+      markLang();
+      syncShots();
+      closeMenus();
+    });
+  });
+  document.querySelectorAll(".menu [data-theme]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var next = b.dataset.theme;
+      if (next === systemTheme()) delete root.dataset.theme;
+      else root.dataset.theme = next;
+      store("theme", next, systemTheme());
+      syncShots();
+      closeMenus();
+    });
   });
   dark.addEventListener("change", syncShots);
   syncShots();
