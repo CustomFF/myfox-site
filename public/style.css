@@ -17,8 +17,8 @@
   --ff-pill: #e3e1dc;
 
   --r: 5px;
-  --f-display: "Unbounded", "Onest", system-ui, sans-serif;
-  --f-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-display: "Golos Text", system-ui, sans-serif;
+  --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "DejaVu Sans Mono", monospace;
 }
 @media (prefers-color-scheme: dark) {
@@ -499,18 +499,7 @@ html.deck-on .shots.row .shot img {
 html.deck-on .shots.col { justify-content: center; }
 html.deck-on .shots.col .shot img { width: auto; height: auto; max-width: 100cqw; max-height: calc(50cqh - 50px); }
 
-/* The cat is part of the site, not of a slide: it stays put in the bottom right corner. */
-.cat-mark {
-  position: absolute; z-index: 0;
-  right: max(28px, env(safe-area-inset-right, 0px));
-  bottom: calc(64px + env(safe-area-inset-bottom, 0px));
-  height: min(25vh, 240px); width: auto;
-  opacity: .1;
-  pointer-events: none;
-}
 .foot nav { margin-left: 0; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cat-mark { filter: invert(1); } }
-:root[data-theme="dark"] .cat-mark { filter: invert(1); }
 
 /* Each demo slide sits on its own shot, blurred. */
 .sp-tour .bg {
@@ -536,10 +525,9 @@ html.deck-on .shots.col .shot img { width: auto; height: auto; max-width: 100cqw
 }
 .shot:last-child figcaption, .shots.row .shot:last-child figcaption { color: var(--accent); }
 
-/* The cat lives in the window behind the slides: content passes over it, and it stays above the footer. */
+/* The cat lives in the window behind the slides: content passes over it. */
 .deck { position: relative; }
 .track { position: relative; z-index: 1; }
-.cat-mark { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); opacity: .07; }
 
 /* Shot labels: solid chips over the bottom left corner, like on the first slide's slider. */
 .shot { position: relative; gap: 0; }
@@ -557,7 +545,6 @@ html.deck-on .shots.col .shot img { width: auto; height: auto; max-width: 100cqw
 }
 html.deck-on .shots.row .shot img { max-height: 100cqh; }
 html.deck-on .shots.col .shot img { max-height: calc(50cqh - 14px); }
-.cat-mark { bottom: calc(140px + env(safe-area-inset-bottom, 0px)); }
 
 /* A demo slide blurs whatever is behind it, the cat included, the same way it blurs its shot. */
 html.deck-on .sp-tour { -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); }
@@ -568,13 +555,13 @@ html.deck-on .sp-tour { -webkit-backdrop-filter: blur(30px); backdrop-filter: bl
   left: 50%; top: 50%;
   height: 130%; width: auto; max-width: none;
   transform: translate(-30%, -50%) rotate(-8deg);
-  filter: blur(24px);
+  filter: blur(24px) brightness(0);
   opacity: .05;
   pointer-events: none;
 }
 .deck { overflow: hidden; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cat-bg { filter: blur(24px) invert(1); } }
-:root[data-theme="dark"] .cat-bg { filter: blur(24px) invert(1); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cat-bg { filter: blur(24px); } }
+:root[data-theme="dark"] .cat-bg { filter: blur(24px); }
 html:not(.deck-on) .cat-bg { position: fixed; height: 130vh; }
 .cat-bg { opacity: .08; transform: translate(-65%, -50%) rotate(-8deg); }
 .cat-bg { transform: translate(-95%, -50%) rotate(-8deg); }
@@ -601,3 +588,209 @@ html.deck-on .sp-tour::before {
   pointer-events: none;
 }
 .sp-tour .bg { inset: 0; width: 100%; height: 100%; }
+
+
+/* Slogans: big lines at the bottom of a slide that run a little onto its screenshot. */
+.slogan, .sp-tour h2 {
+  font: 700 clamp(1.6rem, .9rem + 2.2vw, 3rem)/1.1 var(--f-display); letter-spacing: -.02em;
+  color: var(--text); text-align: center;
+  max-width: 34ch; justify-self: center;
+  position: relative; z-index: 2;
+  text-shadow: 0 0 4px var(--page), 0 0 14px var(--page), 0 0 32px var(--page);
+}
+html.deck-on .sp-tour .sp-in { grid-template-rows: minmax(0, 1fr) auto; gap: 0; }
+html.deck-on .sp-tour .shots { grid-row: 1; }
+html.deck-on .sp-tour h2 { grid-row: 2; margin-top: -.6em; }
+
+/* The first section: two slides in one place, the second dissolves over the first. */
+.sp-stack { position: relative; }
+.sp-stack .intro-line {
+  max-width: 1120px; margin: 0 auto; padding-top: 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.hero-shot img {
+  display: block; max-width: 100%; height: auto; margin: 0 auto;
+  border-radius: var(--r);
+  box-shadow: 0 2px 6px var(--shadow), 0 14px 40px var(--shadow);
+}
+.hint { display: none; }
+
+html.deck-on .sp-stack { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); }
+html.deck-on .sp-stack .intro-line { width: 100%; padding-top: 24px; }
+html.deck-on .layers { position: relative; min-height: 0; }
+html.deck-on .layers > .sp {
+  position: absolute; inset: 0;
+  opacity: 0; visibility: hidden;
+  transition: opacity .7s ease, visibility .7s;
+}
+html.deck-on .layers > .sp.is-on { opacity: 1; visibility: visible; }
+html.deck-on .sp-hero .sp-in { grid-template-rows: minmax(0, 1fr) auto; gap: 0; padding-top: 14px; padding-bottom: 84px; }
+html.deck-on .hero-shot { container-type: size; min-height: 0; display: grid; place-items: center; }
+html.deck-on .hero-shot img { width: min(100cqw, 100cqh * 1878 / 1146); max-width: none; }
+html.deck-on .sp-hero .slogan { margin-top: -.6em; }
+
+/* What to do next: turn the wheel, or click here. */
+html.deck-on .hint {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  position: absolute; left: 50%; bottom: 14px; z-index: 3; transform: translateX(-50%);
+  padding: 6px 12px; border: 0; border-radius: var(--r);
+  background: none; color: var(--muted); cursor: pointer;
+  font: 600 12px/1.2 var(--f-body);
+}
+html.deck-on .hint:hover { color: var(--accent); }
+.hint .wheel { animation: wheel 1.6s ease-in-out infinite; }
+@keyframes wheel {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(9px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.deck-on .layers > .sp { transition: none; }
+  .hint .wheel { animation: none; }
+}
+
+/* Slogans as solid frosted plates over the bottom of the screenshot, not glowing text. */
+.slogan, .sp-tour h2 {
+  font: 800 clamp(1.7rem, .9rem + 2.4vw, 3.3rem)/1.05 var(--f-display); letter-spacing: -.03em;
+  text-shadow: none; text-wrap: balance;
+  max-width: 24ch; padding: .32em .6em .38em; border-radius: 14px;
+  background: color-mix(in srgb, var(--page) 74%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 12px 44px var(--shadow);
+}
+html.deck-on .sp-tour h2, html.deck-on .sp-hero .slogan { margin-top: -1em; }
+
+/* First the stock interface, said quietly; then the answer, loud. */
+.sp-hero:not(.yes) .slogan { font-weight: 700; color: var(--muted); }
+.sp-hero.yes .slogan {
+  font-size: clamp(2rem, 1rem + 3.2vw, 4.4rem);
+  background: var(--accent); color: var(--on-accent);
+  box-shadow: 0 16px 60px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+html.deck-on .layers > .sp.yes .hero-shot img { transform: scale(1.04); transition: transform 1.1s cubic-bezier(.2, .7, .2, 1); }
+html.deck-on .layers > .sp.yes.is-on .hero-shot img { transform: none; }
+html.deck-on .layers > .sp.yes.is-on .slogan { animation: pop .7s .35s both cubic-bezier(.2, 1.5, .4, 1); }
+@keyframes pop { from { transform: scale(.55); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* The mouse hint sits on the slide, in the bottom right corner. */
+html.deck-on .sp-hero .sp-in { padding-bottom: 28px; }
+html.deck-on .hint {
+  left: auto; right: 24px; bottom: 20px; transform: none;
+  padding: 10px 12px 8px; border-radius: 12px;
+  background: color-mix(in srgb, var(--page) 70%, transparent);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  box-shadow: 0 6px 24px var(--shadow);
+  color: var(--text);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.deck-on .layers > .sp.yes .hero-shot img { transform: none; transition: none; }
+  html.deck-on .layers > .sp.yes.is-on .slogan { animation: none; }
+}
+html.deck-on .sp-group, html.deck-on .sp-stack { grid-template-columns: minmax(0, 1fr); }
+
+/* Slogans without plates: the bottom of the screenshot fades into the page and the line sits on that fade. */
+.slogan, .sp-tour h2 {
+  font: 800 clamp(1.5rem, .8rem + 1.9vw, 2.7rem)/1.1 var(--f-display); letter-spacing: -.025em;
+  color: var(--text);
+  max-width: 30ch; padding: 0; border-radius: 0;
+  background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none;
+}
+html.deck-on .sp-tour h2, html.deck-on .sp-hero .slogan { margin-top: -1.3em; }
+html.deck-on .hero-shot img,
+html.deck-on .shots.row .shot img,
+html.deck-on .shots.col .shot:last-child img {
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 98%);
+}
+html.deck-on .shots.row { align-items: flex-end; }
+/* the Before / After chips go to the top, clear of the fade */
+.shot figcaption, .shot:last-child figcaption, .shots.row .shot:last-child figcaption { top: 12px; bottom: auto; }
+
+/* First the stock interface, said quietly; then the answer, in full voice. */
+.sp-hero:not(.yes) .slogan { font-weight: 600; color: var(--muted); }
+.sp-hero.yes .slogan {
+  font-size: clamp(1.9rem, 1rem + 2.8vw, 3.8rem);
+  background: none; color: var(--text); box-shadow: none;
+}
+@keyframes pop { from { transform: translateY(.4em); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Before / After chips sit just above their shot, so they cover nothing in it. */
+.shot figcaption, .shot:last-child figcaption, .shots.row .shot:last-child figcaption {
+  top: auto; bottom: calc(100% + 8px); left: 0;
+  box-shadow: none;
+}
+html.deck-on .sp-tour .shots { padding-top: 30px; }
+html.deck-on .shots.row .shot img { max-height: calc(100cqh - 30px); }
+/* Low shots stacked in a column: they sit right over the slogan, and nothing fades. */
+html.deck-on .shots.col { justify-content: flex-end; gap: 40px; }
+html.deck-on .shots.col .shot img { max-height: calc((100cqh - 30px - 40px) / 2); }
+html.deck-on .shots.col .shot:last-child img { -webkit-mask-image: none; mask-image: none; }
+html.deck-on .sp-tour .sp-in:has(.shots.col) h2 { margin-top: 28px; }
+html.deck-on .hero-shot img,
+html.deck-on .shots.row .shot img {
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 94%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 94%);
+}
+html.deck-on .sp-tour h2, html.deck-on .sp-hero .slogan { margin-top: -1.1em; }
+
+/* The first section opens with plain text: what MyFox is. */
+html.deck-on .sp-stack { grid-template-rows: minmax(0, 1fr); }
+.sp-intro .sp-in { align-content: center; gap: 20px; }
+.sp-intro h1 { font: 800 clamp(3rem, 1.6rem + 6vw, 7rem)/1 var(--f-display); letter-spacing: -.04em; }
+.sp-intro .lead { font-size: clamp(1.15rem, .9rem + .9vw, 1.7rem); line-height: 1.4; max-width: 34ch; }
+.sp-intro .go { justify-self: start; margin-top: 8px; font: inherit; border: 0; cursor: pointer; }
+html.deck-on .sp-hero .sp-in { padding-top: 28px; }
+.sp-hero:not(.yes) .slogan { font-weight: 700; color: var(--text); }
+.sp-hero.yes .slogan { color: var(--accent); font-weight: 900; }
+
+/* Text-only slides between the shots. */
+.sp-say .sp-in { align-content: center; justify-items: center; }
+.say {
+  font: 800 clamp(2rem, 1rem + 3.4vw, 4.6rem)/1.08 var(--f-display); letter-spacing: -.03em;
+  text-align: center; max-width: 18ch; text-wrap: balance;
+}
+.sp-hero:not(.yes) .slogan { font-size: clamp(1.3rem, .8rem + 1.5vw, 2.2rem); max-width: 40ch; }
+
+/* The opening slides blur as they dissolve into each other. */
+html.deck-on .layers > .sp { filter: blur(14px); transition: opacity .8s ease, filter .8s ease, visibility .8s; }
+html.deck-on .layers > .sp.is-on { filter: none; }
+@media (prefers-reduced-motion: reduce) { html.deck-on .layers > .sp { filter: none; transition: none; } }
+
+/* Idle: the arrows blink, so it is clear where to go on. */
+html.deck-on.idle .side:not([disabled]) { animation: beckon 1.8s ease-in-out infinite; }
+@keyframes beckon {
+  0%, 100% { background: color-mix(in srgb, var(--frame) 80%, transparent); color: var(--text); box-shadow: 0 2px 10px var(--shadow); }
+  50% { background: var(--accent); color: var(--on-accent); box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 22%, transparent), 0 2px 10px var(--shadow); }
+}
+@media (prefers-reduced-motion: reduce) { html.deck-on.idle .side:not([disabled]) { animation: none; } }
+
+/* Between the opening stack and the next section the page dissolves instead of sliding. */
+html.deck-on .track { transition: transform .6s cubic-bezier(.2, .7, .2, 1), opacity .4s ease, filter .4s ease; }
+html.deck-on .track.swap { opacity: 0; filter: blur(14px); }
+
+/* Low shots in a column do not fill the slide: they and the slogan stand together in the middle. */
+html.deck-on .sp-tour .sp-in:has(.shots.col) { grid-template-rows: auto auto; align-content: center; }
+html.deck-on .sp-tour .shots.col { height: auto; container-type: inline-size; }
+html.deck-on .sp-tour .shots.col .shot img { max-height: none; }
+
+/* Every demo slide: the shots and the slogan stand together in the middle of the slide,
+   the shots as large as the slide allows once room for the labels and the slogan is kept. */
+html.deck-on .sp-tour .sp-in,
+html.deck-on .sp-tour .sp-in:has(.shots.col) {
+  --cap: 8rem;
+  container-type: size;
+  grid-template-rows: auto auto; align-content: center;
+}
+html.deck-on .sp-tour .shots, html.deck-on .sp-tour .shots.col { height: auto; container-type: normal; }
+html.deck-on .sp-tour .shots.row .shot img {
+  max-width: calc((100cqw - (var(--n) - 1) * 28px) / var(--n));
+  max-height: calc(100cqh - 30px - var(--cap));
+}
+html.deck-on .sp-tour .shots.col .shot img {
+  max-width: 100cqw;
+  max-height: calc((100cqh - 30px - 40px - var(--cap)) / 2);
+}
+html.deck-on .shots.row { align-items: flex-start; }
+.foot nav a { display: inline-flex; align-items: center; gap: 7px; }
+.foot nav .gh { width: 1.1em; height: 1.1em; flex: none; }

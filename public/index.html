@@ -6,9 +6,7 @@
 <title>MyFox</title>
 <meta name="description" content="MyFox — набор твиков интерфейса Firefox и утилита для их установки и обновления.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&family=Unbounded:wght@600;700&display=swap">
+<link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="style.css">
 <script>
   // Before first paint: language and theme, so nothing flips after load.
@@ -42,42 +40,47 @@
 </header>
 
 <main class="deck" id="deck">
-<img class="cat-bg" src="cat.svg" alt="" aria-hidden="true">
-<img class="cat-mark" src="cat.svg" alt="" aria-hidden="true">
+<img class="cat-bg" src="img/Because%20i%20can%20white.svg" alt="" aria-hidden="true">
 <div class="track">
 
-  <section class="sp sp-hero hero" data-nav="top" id="top" data-side="before">
-    <div class="sp-in">
-      <div class="intro-line">
-        <h1>MyFox</h1>
-        <p class="lead" lang="ru">MyFox — набор твиков интерфейса Firefox и утилита для их установки и обновления.</p>
-        <p class="lead" lang="en">MyFox is a set of Firefox interface tweaks and a utility for installing and updating them.</p>
-      </div>
-      <div class="cap-line">
-        <h2 class="hero-title"><span class="s-before"><span lang="ru">Вы к этому привыкли.</span><span lang="en">You got used to this.</span></span><span class="s-after"><span lang="ru">А можно так.</span><span lang="en">Or it can be like this.</span></span></h2>
-        <p class="sub s-before" lang="ru">Стандартный Firefox. Потяните ползунок влево.</p>
-        <p class="sub s-before" lang="en">Stock Firefox. Drag the slider to the left.</p>
-        <p class="sub s-after" lang="ru">Firefox с MyFox tweaks.</p>
-        <p class="sub s-after" lang="en">Firefox with MyFox tweaks.</p>
-      </div>
-      <div class="cmp-box">
-        <div class="compare" id="compare" data-dir="img/">
-          <img class="after" alt="Firefox с MyFox tweaks" src="img/ru-light-after.webp" width="1878" height="1146">
-          <img class="before" alt="Firefox без твиков" src="img/ru-light-before.webp" width="1878" height="1146">
-          <span class="tag l"><span lang="ru">Стандартный</span><span lang="en">Stock</span></span>
-          <span class="tag r">MyFox tweaks</span>
-          <div class="handle"></div>
-          <input type="range" id="compare-range" min="0" max="100" value="96" step="0.1" aria-label="Было / стало">
+  <div class="sp-stack" data-nav="top" id="top">
+    <div class="layers">
+      <section class="sp sp-intro" data-nav="top">
+        <div class="sp-in">
+          <h1>MyFox</h1>
+          <p class="lead" lang="ru">MyFox — набор твиков интерфейса Firefox и утилита для их установки и обновления.</p>
+          <p class="lead" lang="en">MyFox is a set of Firefox interface tweaks and a utility for installing and updating them.</p>
+          <button class="go more" type="button"><span lang="ru">Подробнее</span><span lang="en">Learn more</span></button>
         </div>
+      </section>
+      <section class="sp sp-say" data-nav="top">
+        <div class="sp-in"><p class="say"><span lang="ru">Что сегодня представляет собой Firefox?</span><span lang="en">What is Firefox like today?</span></p></div>
+      </section>
+      <section class="sp sp-hero" data-nav="top">
+        <div class="sp-in">
+          <div class="hero-shot"><img data-hero="before" src="img/ru-light-before.webp" width="1878" height="1146" alt="Firefox без твиков"></div>
+          <h2 class="slogan"><span lang="ru">Вкладки-пилюли. Громоздкие элементы интерфейса. Навязчивые функции, о которых никто не просил.</span><span lang="en">Pill tabs. Bulky interface elements. Pushy features nobody asked for.</span></h2>
         </div>
+      </section>
+      <section class="sp sp-say" data-nav="top">
+        <div class="sp-in"><p class="say"><span lang="ru">Всё это можно исправить.</span><span lang="en">All of this can be fixed.</span></p></div>
+      </section>
+      <section class="sp sp-hero yes" data-nav="top">
+        <div class="sp-in">
+          <div class="hero-shot"><img data-hero="after" src="img/ru-light-after.webp" width="1878" height="1146" alt="Firefox с MyFox tweaks"></div>
+          <h2 class="slogan"><span lang="ru">Установив MyFox.</span><span lang="en">By installing MyFox.</span></h2>
+        </div>
+      </section>
     </div>
-  </section>
+    <button class="side prev" type="button" aria-label="Назад">‹</button>
+    <button class="side next" type="button" aria-label="Дальше">›</button>
+  </div>
 
   <div class="sp-group" data-nav="tour" id="tour">
     <h2 class="tour-head"><span lang="ru">MyFox кардинально меняет интерфейс Firefox</span><span lang="en">MyFox changes the Firefox interface from the ground up</span></h2>
     <div class="strip">
     <section class="sp sp-tour" data-nav="tour">
-    <img class="bg" aria-hidden="true" data-part="new-sidebar" data-k="b" src="img/parts/new-sidebar-ru-light-b.webp" width="365" height="678" alt="">
+    <img class="bg" aria-hidden="true" data-hero="after" src="img/ru-light-after.webp" width="1878" height="1146" alt="">
       <div class="sp-in">
         <h2><span lang="ru">Списки загрузок и установленных расширений, а также встроенный переводчик теперь можно открыть и в боковой панели</span><span lang="en">The lists of downloads and installed extensions, as well as the built-in translator, can now be opened in the sidebar too</span></h2>
         <div class="shots row" style="--n: 3">
@@ -97,7 +100,7 @@
       </div>
     </section>
     <section class="sp sp-tour" data-nav="tour">
-    <img class="bg" aria-hidden="true" data-part="launcher" data-k="b" src="img/parts/launcher-ru-light-b.webp" width="631" height="730" alt="">
+    <img class="bg" aria-hidden="true" data-hero="after" src="img/ru-light-after.webp" width="1878" height="1146" alt="">
       <div class="sp-in">
         <h2><span lang="ru">Кнопки инструментов можно разместить над боковой панелью</span><span lang="en">The tool buttons can be placed above the sidebar</span></h2>
         <div class="shots row" style="--n: 2">
@@ -113,7 +116,7 @@
       </div>
     </section>
     <section class="sp sp-tour" data-nav="tour">
-    <img class="bg" aria-hidden="true" data-part="tabs" data-k="b" src="img/parts/tabs-ru-light-b.webp" width="1380" height="83" alt="">
+    <img class="bg" aria-hidden="true" data-hero="after" src="img/ru-light-after.webp" width="1878" height="1146" alt="">
       <div class="sp-in">
         <h2><span lang="ru">Вкладки снова похожи на вкладки, а не на «пилюли»</span><span lang="en">Tabs look like tabs again, not “pills”</span></h2>
         <div class="shots col">
@@ -129,7 +132,7 @@
       </div>
     </section>
     <section class="sp sp-tour" data-nav="tour">
-    <img class="bg" aria-hidden="true" data-part="vertical" data-k="b" src="img/parts/vertical-ru-light-b.webp" width="730" height="584" alt="">
+    <img class="bg" aria-hidden="true" data-hero="after" src="img/ru-light-after.webp" width="1878" height="1146" alt="">
       <div class="sp-in">
         <h2><span lang="ru">Вертикальные вкладки переработаны в том же стиле</span><span lang="en">Vertical tabs are reworked in the same style</span></h2>
         <div class="shots row" style="--n: 2">
@@ -145,17 +148,17 @@
       </div>
     </section>
     <section class="sp sp-tour" data-nav="tour">
-    <img class="bg" aria-hidden="true" data-part="extmenu" data-k="b" src="img/parts/extmenu-ru-light-b.webp" width="914" height="403" alt="">
+    <img class="bg" aria-hidden="true" data-hero="after" src="img/ru-light-after.webp" width="1878" height="1146" alt="">
       <div class="sp-in">
         <h2><span lang="ru">Меню стали компактнее</span><span lang="en">Menus became more compact</span></h2>
         <div class="shots row" style="--n: 2">
         <figure class="shot">
           <figcaption><span lang="ru">До</span><span lang="en">Before</span></figcaption>
-          <img data-part="extmenu" data-k="a" src="img/parts/extmenu-ru-light-a.webp" width="999" height="783" alt="" loading="lazy">
+          <img data-part="extmenu" data-k="a" src="img/parts/extmenu-ru-light-a.webp" width="1004" height="809" alt="" loading="lazy">
         </figure>
         <figure class="shot">
           <figcaption><span lang="ru">После</span><span lang="en">After</span></figcaption>
-          <img data-part="extmenu" data-k="b" src="img/parts/extmenu-ru-light-b.webp" width="914" height="403" alt="" loading="lazy">
+          <img data-part="extmenu" data-k="b" src="img/parts/extmenu-ru-light-b.webp" width="1004" height="809" alt="" loading="lazy">
         </figure>
       </div>
       </div>
@@ -199,8 +202,8 @@
 
       <div class="facts">
         <div class="card">
-          <p lang="ru">MyFox устанавливает Firefox в домашний каталог с отдельным профилем. Права администратора не нужны. Уже установленный в системе Firefox не затрагивается.</p>
-          <p lang="en">MyFox installs Firefox into your home directory with its own profile. No admin rights needed. A Firefox already installed on the system is not affected.</p>
+          <p lang="ru">MyFox устанавливает Firefox с новым профилем в домашнюю папку пользователя. Права администратора не нужны. Уже установленный в системе Firefox и его профили не затрагиваются.</p>
+          <p lang="en">MyFox installs Firefox with a new profile into the user’s home folder. No admin rights needed. A Firefox already installed on the system and its profiles are not affected.</p>
         </div>
         <div class="card">
           <p lang="ru">В MyFox можно скопировать или перенести профиль уже установленного Firefox со всеми закладками, паролями, историей, расширениями и аккаунтом Firefox. Это делается при установке, а позже — командой <code>myfox</code> или на странице about:myfox.</p>
@@ -248,9 +251,8 @@
     <footer>
     <div class="wrap foot">
       <nav>
-        <a href="https://github.com/CustomFF/myfox">MyFox</a>
-        <a href="https://github.com/CustomFF/myfox-tweaks">MyFox tweaks</a>
-        <a href="https://github.com/CustomFF">GitHub CustomFF</a>
+        <a href="https://github.com/CustomFF/myfox"><svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>MyFox</a>
+        <a href="https://github.com/CustomFF/myfox-tweaks"><svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>MyFox tweaks</a>
       </nav>
     </div>
   </footer>

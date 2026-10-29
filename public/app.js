@@ -6,54 +6,15 @@
   function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
   function theme() { return root.dataset.theme || (dark.matches ? "dark" : "light"); }
 
-  // Before / after screenshots follow the page language and theme.
-  // Each slider takes its pictures from the folder in data-dir.
-  var compares = Array.prototype.slice.call(document.querySelectorAll(".compare"));
+  // Screenshots follow the page language and theme.
   function syncShots() {
-    compares.forEach(function (c) {
-      var name = c.dataset.dir + root.dataset.lang + "-" + theme() + "-";
-      c.querySelector(".before").src = name + "before.webp";
-      c.querySelector(".after").src = name + "after.webp";
+    var tail = root.dataset.lang + "-" + theme();
+    document.querySelectorAll("img[data-hero]").forEach(function (img) {
+      img.src = "img/" + tail + "-" + img.dataset.hero + ".webp";
     });
     document.querySelectorAll("img[data-part]").forEach(function (img) {
-      img.src = "img/parts/" + img.dataset.part + "-" + root.dataset.lang + "-" + theme() + (img.dataset.k ? "-" + img.dataset.k : "") + ".webp";
+      img.src = "img/parts/" + img.dataset.part + "-" + tail + (img.dataset.k ? "-" + img.dataset.k : "") + ".webp";
     });
-  }
-  function slider(c) {
-    var input = c.querySelector("input");
-    var tagL = c.querySelector(".tag.l"), tagR = c.querySelector(".tag.r");
-    var side = c.closest("[data-side]");
-    function sync() {
-      var x = Number(input.value);
-      c.style.setProperty("--x", x + "%");
-      if (side) side.dataset.side = x >= 50 ? "before" : "after";
-      // A label fades out once its side is too narrow to hold it.
-      tagL.style.opacity = Math.max(0, Math.min(1, (x - 8) / 10));
-      tagR.style.opacity = Math.max(0, Math.min(1, (92 - x) / 10));
-    }
-    input.addEventListener("input", sync);
-    sync();
-    return sync;
-  }
-  var syncs = compares.map(slider);
-  var range = document.getElementById("compare-range");
-  var syncRange = syncs[compares.indexOf(document.getElementById("compare"))];
-
-  // One peek on load, so it is clear the picture moves.
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var touched = false;
-    range.addEventListener("pointerdown", function () { touched = true; });
-    var start = null, from = Number(range.value);
-    setTimeout(function () {
-      requestAnimationFrame(function step(t) {
-        if (touched) return;
-        if (start === null) start = t;
-        var k = Math.min((t - start) / 1600, 1);
-        range.value = from - 22 * Math.sin(Math.PI * k);
-        syncRange();
-        if (k < 1) requestAnimationFrame(step);
-      });
-    }, 700);
   }
 
   document.getElementById("lang-btn").addEventListener("click", function () {
@@ -121,21 +82,48 @@
     dots.forEach(function (d, k) { d.setAttribute("aria-current", String(k === i)); });
     document.querySelector(".urlbar .path").textContent = nav === "top" ? "" : "/#" + nav;
   }
-  // Sections turn vertically; the slides of a group (the demo) turn sideways.
+  // Sections turn vertically; the slides of a group (the demo) turn sideways,
+  // the slides of a stack (the first section) dissolve one into the next.
   var sections = Array.prototype.slice.call(track.children);
+  var shownSec = null, swapTimer = null;
   function place() {
     var p = pages[at];
     var group = p.closest(".sp-group");
-    var sec = sections.indexOf(group || p);
-    track.style.transform = deckQuery.matches ? "translateY(" + (-100 * sec) + "%)" : "";
+    var sec = sections.indexOf(p.closest(".sp-group, .sp-stack") || p);
+    var shift = deckQuery.matches ? "translateY(" + (-100 * sec) + "%)" : "";
+    // Into and out of the opening stack the page does not slide: it dissolves the same way.
+    var dissolve = deckQuery.matches && shownSec !== null && shownSec !== sec &&
+      (sections[shownSec].matches(".sp-stack") || sections[sec].matches(".sp-stack"));
+    shownSec = sec;
+    clearTimeout(swapTimer);
+    if (dissolve) {
+      track.classList.add("swap");
+      swapTimer = setTimeout(function () {
+        track.style.transition = "none";
+        track.style.transform = shift;
+        void track.offsetHeight;
+        track.style.transition = "";
+        track.classList.remove("swap");
+      }, 400);
+    } else {
+      track.classList.remove("swap");
+      track.style.transform = shift;
+    }
+    document.querySelectorAll(".sp-stack").forEach(function (st) {
+      var own = Array.prototype.slice.call(st.querySelectorAll(".sp"));
+      var k = st.contains(p) ? own.indexOf(p) : (sections.indexOf(st) < sec ? own.length - 1 : 0);
+      own.forEach(function (l, j) { l.classList.toggle("is-on", j === k); });
+    });
     document.querySelectorAll(".sp-group").forEach(function (g) {
       var strip = g.querySelector(".strip");
       var own = Array.prototype.slice.call(strip.children);
       var k = g === group ? own.indexOf(p) : (sections.indexOf(g) < sec ? own.length - 1 : 0);
       strip.style.transform = deckQuery.matches ? "translateX(" + (-100 * k) + "%)" : "";
-      g.querySelector(".side.prev").disabled = g === group && k === 0;
-      g.querySelector(".side.next").disabled = g === group && k === own.length - 1;
     });
+    // The arrows turn slides everywhere; they stop at the first and the last slide.
+    document.querySelectorAll(".side.prev").forEach(function (b) { b.disabled = at === 0; });
+    // The first slide has its own "Learn more" button instead.
+    document.querySelectorAll(".side.next").forEach(function (b) { b.disabled = at === 0 || at === pages.length - 1; });
   }
   function go(i) {
     at = Math.max(0, Math.min(pages.length - 1, i));
@@ -143,6 +131,9 @@
     else pages[at].scrollIntoView({ behavior: "smooth" });
     mark(at);
   }
+  document.querySelectorAll(".more").forEach(function (b) {
+    b.addEventListener("click", function () { go(at + 1); });
+  });
   document.querySelectorAll(".side").forEach(function (b) {
     b.addEventListener("click", function () { go(at + (b.classList.contains("next") ? 1 : -1)); });
   });
@@ -164,6 +155,18 @@
     });
   });
   deckQuery.addEventListener("change", setMode);
+
+  // When nothing happens for a while, the arrows blink to show the way on.
+  var idleTimer = null;
+  function awake() {
+    root.classList.remove("idle");
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function () { root.classList.add("idle"); }, 4000);
+  }
+  ["wheel", "keydown", "pointerdown", "pointermove", "touchstart"].forEach(function (t) {
+    addEventListener(t, awake, { passive: true });
+  });
+  awake();
   setMode();
 
   // A slide that scrolls inside (install) scrolls first, and turns at its edge.
@@ -196,7 +199,7 @@
   var t0 = null;
   addEventListener("touchstart", function (e) { t0 = e.touches[0]; }, { passive: true });
   addEventListener("touchend", function (e) {
-    if (!deckQuery.matches || t0 === null || e.target.closest(".compare")) { t0 = null; return; }
+    if (!deckQuery.matches || t0 === null) { t0 = null; return; }
     var t1 = e.changedTouches[0];
     var dx = t0.clientX - t1.clientX, dy = t0.clientY - t1.clientY; t0 = null;
     var horiz = Math.abs(dx) > Math.abs(dy);
