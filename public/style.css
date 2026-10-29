@@ -491,6 +491,22 @@ html.deck-on .side.prev { left: 14px; }
 html.deck-on .side.next { right: 44px; }
 html.deck-on .side[disabled] { opacity: 0; pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { html.deck-on .strip { transition: none; } }
+/* In a group the text does not slide with the shots. It dissolves in place first, the strip
+   starts only after that (the delay below), and the next text shows up once the strip has stopped. */
+html.deck-on .strip { transition-delay: .25s; }
+html.deck-on .strip > .sp :is(h2, p, .go) {
+  opacity: 0; filter: blur(14px); visibility: hidden; pointer-events: none;
+  transition: opacity .25s, filter .25s, visibility 0s .25s;
+}
+html.deck-on .strip > .sp.is-on :is(h2, p, .go) {
+  opacity: 1; filter: none; visibility: visible; pointer-events: auto;
+  transition: opacity .4s .8s, filter .4s .8s, visibility 0s .8s;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.deck-on .strip { transition-delay: 0s; }
+  html.deck-on .strip > .sp :is(h2, p, .go),
+  html.deck-on .strip > .sp.is-on :is(h2, p, .go) { transition: none; }
+}
 html.deck-on .sp-tour .sp-in { max-width: min(1500px, 100%); padding-left: 72px; padding-right: 72px; }
 
 /* Install command: a compact field, and the note under it keeps its room. */

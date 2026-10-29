@@ -138,6 +138,7 @@
       var own = Array.prototype.slice.call(strip.children);
       var k = g === group ? own.indexOf(p) : (sections.indexOf(g) < sec ? own.length - 1 : 0);
       strip.style.transform = deckQuery.matches ? "translateX(" + (-100 * k) + "%)" : "";
+      own.forEach(function (l, j) { l.classList.toggle("is-on", j === k); });
     });
     // The arrows turn slides everywhere; they stop at the first and the last slide.
     document.querySelectorAll(".side.prev").forEach(function (b) { b.disabled = at === 0; });
