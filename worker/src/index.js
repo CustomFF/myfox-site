@@ -8,14 +8,21 @@ const SITE = "https://customff.github.io/myfox-site";
 const GET_SH = "https://raw.githubusercontent.com/CustomFF/myfox/master/get.sh";
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     if (url.hostname === "www.myfox.in") {
       return Response.redirect("https://myfox.in" + url.pathname + url.search, 301);
     }
     const ua = request.headers.get("User-Agent") || "";
 
-    if (url.pathname === "/" && /^(curl|wget)\//i.test(ua)) {
+    const tool = url.pathname === "/" && ua.match(/^(curl|wget)\//i);
+    if (tool) {
+      // One point per script download, no IP: the tool and the country only.
+      env.INSTALLS?.writeDataPoint({
+        indexes: ["get"],
+        blobs: [tool[1].toLowerCase(), request.cf?.country || ""],
+        doubles: [1],
+      });
       return script();
     }
     return site(request, url);

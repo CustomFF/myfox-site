@@ -8,3 +8,7 @@ routes = [
   { pattern = "myfox.in", custom_domain = true },
   { pattern = "www.myfox.in", custom_domain = true },
 ]
+
+[[analytics_engine_datasets]]
+binding = "INSTALLS"
+dataset = "myfox_installs"
