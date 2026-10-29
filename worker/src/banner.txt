@@ -25,8 +25,8 @@ from Mozilla with MyFox tweaks. Firefox goes into your home directory,
 no root needed, the system Firefox is left alone.
 
 Install MyFox:
-  curl -sL myfox.in | sh                  interactive, text form
-  curl -sL myfox.in | sh -s -- --gui      interactive, graphical form
+  curl -sL myfox.in | sh                  interactive, TUI dialog
+  curl -sL myfox.in | sh -s -- --gui      interactive, GUI dialog
   curl -sL myfox.in | sh -s -- -y         non-interactive, default settings
 
 Site:  https://myfox.in
