@@ -80,7 +80,14 @@ p { margin: 0; font-size: clamp(1.15rem, .9rem + .9vw, 1.7rem); line-height: 1.4
 <main>
   <h1>404</h1>
   <p><span lang="ru">Такой страницы нет.</span><span lang="en">There is no such page.</span></p>
-  <a class="go" href="https://myfox.in/"><span lang="ru">На главную</span><span lang="en">Go to the home page</span></a>
+  <a class="go" id="home" href="/"><span lang="ru">На главную</span><span lang="en">Go to the home page</span></a>
+  <script>
+    // The site is served from the root of its own domain, or from /<repo>/ on GitHub Pages.
+    (function () {
+      var repo = location.pathname.split("/")[1];
+      if (/\.github\.io$/.test(location.hostname) && repo) document.getElementById("home").href = "/" + repo + "/";
+    })();
+  </script>
 </main>
 </body>
 </html>
