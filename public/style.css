@@ -159,9 +159,35 @@ body::before {
 }
 .tbtn:hover { background: var(--raise); }
 .tbtn svg { width: 16px; height: 16px; }
-.langs { flex: 0 0 auto; display: inline-flex; gap: 2px; }
-.langs .tbtn { color: var(--muted); font-weight: 500; }
-.langs .tbtn[aria-pressed="true"] { background: var(--raise); color: var(--text); font-weight: 700; cursor: default; }
+/* The language switch: a track with both languages and a thumb that slides to the current one.
+   The whole switch is one button. */
+.langs {
+  position: relative; flex: 0 0 auto; display: inline-flex;
+  padding: 2px; border: 0; border-radius: var(--r);
+  background: var(--field);
+  font: 700 11px/1 var(--f-body); letter-spacing: .04em;
+  cursor: pointer;
+}
+.langs::before {
+  content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px);
+  border-radius: calc(var(--r) - 1px);
+  background: var(--raise);
+  transition: transform .25s ease;
+}
+html[data-lang="en"] .langs::before { transform: translateX(100%); }
+.langs span {
+  position: relative; z-index: 1;
+  width: 28px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--muted); opacity: .6;
+  transition: color .25s, opacity .25s;
+}
+html[data-lang="ru"] .langs .ru,
+html[data-lang="en"] .langs .en { color: var(--text); opacity: 1; }
+.langs:hover span { opacity: .85; }
+html[data-lang="ru"] .langs:hover .ru,
+html[data-lang="en"] .langs:hover .en { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .langs::before, .langs span { transition: none; } }
 
 /* ---------- page card ---------- */
 .page {

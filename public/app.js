@@ -3,8 +3,17 @@
   var BASE = "curl -sL myfox.in | sh";
   var dark = window.matchMedia("(prefers-color-scheme: dark)");
 
-  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
-  function theme() { return root.dataset.theme || (dark.matches ? "dark" : "light"); }
+  // A choice is remembered only when it differs from the system; picking the system
+  // value again forgets it, and the page follows the system from then on.
+  function store(key, value, system) {
+    try {
+      if (value === system) localStorage.removeItem(key);
+      else localStorage.setItem(key, value);
+    } catch (e) {}
+  }
+  function systemLang() { return /^ru|^uk|^be|^kk/i.test(navigator.language || "") ? "ru" : "en"; }
+  function systemTheme() { return dark.matches ? "dark" : "light"; }
+  function theme() { return root.dataset.theme || systemTheme(); }
 
   // Screenshots follow the page language and theme.
   function syncShots() {
@@ -17,25 +26,26 @@
     });
   }
 
-  // Both languages are on the switch; the current one is pressed.
-  var langBtns = document.querySelectorAll("[data-set-lang]");
+  // Both languages are on the switch, the current one is lit; a click anywhere on it flips the language.
   function markLang() {
-    langBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.setLang === root.dataset.lang)); });
+    var d = document.querySelector('meta[name="description"]');
+    d.content = root.dataset.lang === "ru"
+      ? "MyFox — инструментарий для установки и сопровождения официального Firefox с MyFox tweaks."
+      : "MyFox is a toolkit for installing and maintaining the official Firefox with MyFox tweaks.";
   }
-  langBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var lang = btn.dataset.setLang;
-      root.dataset.lang = lang; root.lang = lang;
-      store("lang", lang);
-      markLang();
-      syncShots();
-    });
+  document.getElementById("lang-switch").addEventListener("click", function () {
+    var lang = root.dataset.lang === "ru" ? "en" : "ru";
+    root.dataset.lang = lang; root.lang = lang;
+    store("lang", lang, systemLang());
+    markLang();
+    syncShots();
   });
   markLang();
   document.getElementById("theme-btn").addEventListener("click", function () {
     var next = theme() === "dark" ? "light" : "dark";
-    root.dataset.theme = next;
-    store("theme", next);
+    if (next === systemTheme()) delete root.dataset.theme;
+    else root.dataset.theme = next;
+    store("theme", next, systemTheme());
     syncShots();
   });
   dark.addEventListener("change", syncShots);
