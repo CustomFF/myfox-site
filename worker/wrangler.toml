@@ -1,0 +1,10 @@
+name = "myfox"
+main = "src/index.js"
+account_id = "2dc5bd034191da9827045916a2fc98b8"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+routes = [
+  { pattern = "myfox.in", custom_domain = true },
+  { pattern = "www.myfox.in", custom_domain = true },
+]
