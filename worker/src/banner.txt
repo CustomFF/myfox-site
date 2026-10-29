@@ -24,9 +24,10 @@ MyFox is a toolkit for installing and maintaining the official Firefox
 from Mozilla with MyFox tweaks. Firefox goes into your home directory,
 no root needed, the system Firefox is left alone.
 
-  Install:             curl -sL myfox.in | sh
-  In a window:         curl -sL myfox.in | sh -s -- --gui
-  Defaults, no form:   curl -sL myfox.in | sh -s -- -y
+Install MyFox:
+  curl -sL myfox.in | sh                  interactive, text form
+  curl -sL myfox.in | sh -s -- --gui      interactive, graphical form
+  curl -sL myfox.in | sh -s -- -y         non-interactive, default settings
 
-  Site:                https://myfox.in
-  Docs:                https://github.com/CustomFF/myfox/wiki
+Site:  https://myfox.in
+Docs:  https://github.com/CustomFF/myfox/wiki
