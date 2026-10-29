@@ -2,6 +2,7 @@
 // Browsers get the GitHub Pages site, curl/wget on the root get get.sh.
 
 import ERROR_PAGE from "./error.html";
+import BANNER from "./banner.txt";
 
 const SITE = "https://customff.github.io/myfox-site";
 const GET_SH = "https://raw.githubusercontent.com/CustomFF/myfox/master/get.sh";
@@ -21,15 +22,10 @@ export default {
   },
 };
 
-async function script() {
-  const r = await fetch(GET_SH, { cf: { cacheTtl: 300 } }).catch(() => null);
-  if (!r || !r.ok) {
-    return new Response(`echo "MyFox: get.sh is unavailable (${r ? "HTTP " + r.status : "no answer"})" >&2; exit 1\n`, {
-      status: 502,
-      headers: { "content-type": "text/plain; charset=utf-8" },
-    });
-  }
-  return new Response(r.body, {
+// Read without `| sh` it is a page to look at: the banner as comments and one line that runs get.sh.
+function script() {
+  const banner = BANNER.trimEnd().split("\n").map((l) => ("# " + l).trimEnd()).join("\n");
+  return new Response(`#!/bin/sh\n${banner}\n#\n\ncurl -fsSL ${GET_SH} | sh -s -- "$@"\n`, {
     headers: {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "no-cache",
