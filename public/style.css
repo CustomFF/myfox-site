@@ -853,6 +853,29 @@ html.deck-on .shots.row { align-items: flex-start; }
 .go { justify-content: center; }
 .sp-text .go { width: 304px; }
 
+/* The Before / After chips are ribbons: they stick out past the left edge of their shot and
+   the end folds back behind it, so they read as labels on the card and not as buttons in it.
+   In the deck the bottom of a shot in a row fades out, so there the ribbon hangs where the fade
+   begins; elsewhere it sits low on the shot. */
+.shot figcaption,
+.shot:last-child figcaption,
+.shots.row .shot:last-child figcaption {
+  --fold: color-mix(in srgb, var(--text) 55%, #000);
+  top: auto; right: auto; left: -6px; bottom: 14px;
+  padding: 5px 12px 4px 14px;
+  border-radius: 0 3px 3px 0;
+  font: 700 11px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase;
+  /* the ribbon lies on the shot and casts a shadow onto it */
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, .3), 3px 6px 10px rgba(0, 0, 0, .3);
+}
+.shot:last-child figcaption, .shots.row .shot:last-child figcaption, .shot figcaption.hi {
+  --fold: color-mix(in srgb, var(--accent) 55%, #000);
+}
+.shot figcaption::before {
+  content: ""; position: absolute; left: 0; top: 100%;
+  border-top: 6px solid var(--fold); border-left: 6px solid transparent;
+}
+html.deck-on .shots.row .shot figcaption { bottom: 38%; }
 /* A plain page (phone): the slide buttons are gone (the page scrolls), and the install buttons
    take the full width. */
 html:not(.deck-on) .more { display: none; }
