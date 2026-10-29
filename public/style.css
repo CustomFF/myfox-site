@@ -206,11 +206,11 @@ section.hero { border-top: 0; padding-block: 56px 64px; }
 
 h1, h2, h3 { text-wrap: balance; margin: 0; }
 h2 {
-  font: 600 clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem)/1.15 var(--f-display);
+  font: 600 clamp(24px, 17.6px + 1.6vw, 33.6px)/1.15 var(--f-display);
   letter-spacing: -.01em;
 }
-h3 { font: 600 1.05rem/1.3 var(--f-body); }
-.lead { font-size: 1.15rem; color: var(--text); max-width: 62ch; }
+h3 { font: 600 16.8px/1.3 var(--f-body); }
+.lead { font-size: 18.4px; color: var(--text); max-width: 62ch; }
 .sub { color: var(--muted); max-width: 62ch; margin: 12px 0 0; }
 p { margin: 0; }
 .prose { display: grid; gap: 1em; max-width: 64ch; }
@@ -218,11 +218,11 @@ p { margin: 0; }
 /* ---------- hero ---------- */
 .hero-grid { display: grid; gap: 28px; }
 .hero h1 {
-  font: 700 clamp(2.6rem, 1.6rem + 4.5vw, 4.6rem)/1 var(--f-display);
+  font: 700 clamp(41.6px, 25.6px + 4.5vw, 73.6px)/1 var(--f-display);
   letter-spacing: -.035em;
 }
 .hero h1 .tw { color: var(--accent); }
-.hero .lead { font-size: clamp(1.05rem, .95rem + .5vw, 1.3rem); line-height: 1.5; }
+.hero .lead { font-size: clamp(16.8px, 15.2px + .5vw, 20.8px); line-height: 1.5; }
 .req { font: 12px/1.4 var(--f-mono); color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; }
 
 /* the install command, styled as an address field */
@@ -238,7 +238,7 @@ p { margin: 0; }
   flex: 1; min-width: 0; margin: 0;
   padding: 14px 16px;
   overflow-x: auto;
-  font: 500 clamp(.85rem, .78rem + .35vw, 1.05rem)/1.3 var(--f-mono);
+  font: 500 clamp(13.6px, 12.48px + .35vw, 16.8px)/1.3 var(--f-mono);
   color: var(--text);
 }
 .cmd pre .p { color: var(--muted); user-select: none; }
@@ -299,7 +299,7 @@ p { margin: 0; }
 }
 .compare .tag.l { left: 10px; }
 .compare .tag.r { right: 10px; background: var(--accent); color: var(--on-accent); }
-.compare-note { margin-top: 12px; font-size: .9rem; color: var(--muted); }
+.compare-note { margin-top: 12px; font-size: 14.4px; color: var(--muted); }
 
 /* ---------- install ---------- */
 .install { display: grid; gap: 40px; grid-template-columns: minmax(0, 1fr); }
@@ -311,7 +311,7 @@ p { margin: 0; }
   font: 500 12px/1 var(--f-body); cursor: pointer;
 }
 .mode[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
-.mode-note { margin-top: 10px; color: var(--muted); font-size: .92rem; min-height: 1.6em; }
+.mode-note { margin-top: 10px; color: var(--muted); font-size: 14.72px; min-height: 1.6em; }
 .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .facts .card p { color: var(--text); }
 .facts .card .k { font: 600 11px/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
@@ -321,10 +321,10 @@ p { margin: 0; }
   border: 1px solid var(--line);
   border-radius: var(--r);
 }
-.term table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+.term table { border-collapse: collapse; width: 100%; font-size: 14.72px; }
 .term td { padding: 9px 16px; vertical-align: top; }
 .term tr + tr td { border-top: 1px solid var(--line); }
-.term td:first-child { white-space: nowrap; font-family: var(--f-mono); font-size: .86rem; color: var(--accent); width: 1%; }
+.term td:first-child { white-space: nowrap; font-family: var(--f-mono); font-size: 13.76px; color: var(--accent); width: 1%; }
 .split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
 .split > div { display: grid; gap: 12px; align-content: start; }
 .split p { color: var(--muted); }
@@ -339,9 +339,9 @@ p { margin: 0; }
 footer { padding-block: 40px 48px; border-top: 1px solid var(--line); }
 .foot { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 .foot .cat { width: 44px; height: auto; opacity: .9; }
-.foot .bic { font: 600 1rem/1.2 var(--f-display); }
-.foot nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-left: auto; font-size: .92rem; }
-.foot small { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+.foot .bic { font: 600 16px/1.2 var(--f-display); }
+.foot nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-left: auto; font-size: 14.72px; }
+.foot small { display: block; color: var(--muted); font-size: 12.8px; margin-top: 2px; }
 .cat-ico, .foot .cat { transition: filter .2s; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cat-ico, :root:not([data-theme="light"]) .foot .cat { filter: invert(1); } }
 :root[data-theme="dark"] .cat-ico, :root[data-theme="dark"] .foot .cat { filter: invert(1); }
@@ -359,12 +359,12 @@ footer { padding-block: 40px 48px; border-top: 1px solid var(--line); }
 }
 
 /* ---------- v2: hero on "before", intro, parts ---------- */
-.hero h1 { font-size: clamp(2rem, 1.3rem + 3vw, 3.4rem); letter-spacing: -.03em; }
+.hero h1 { font-size: clamp(32px, 20.8px + 3vw, 54.4px); letter-spacing: -.03em; }
 .hero-grid { gap: 14px; }
-.hero .sub { margin: 0 0 14px; font-size: 1.05rem; }
+.hero .sub { margin: 0 0 14px; font-size: 16.8px; }
 .intro { padding-block: 56px; }
 .intro-grid { display: grid; gap: 22px; }
-.intro h2 { font-size: clamp(2.2rem, 1.6rem + 2.5vw, 3.4rem); letter-spacing: -.035em; }
+.intro h2 { font-size: clamp(35.2px, 25.6px + 2.5vw, 54.4px); letter-spacing: -.035em; }
 
 .hero[data-side="before"] .s-after,
 .hero[data-side="after"] .s-before { display: none; }
@@ -405,15 +405,15 @@ footer { padding-block: 40px 48px; border-top: 1px solid var(--line); }
 
 /* first slide */
 .intro-line { display: grid; gap: 10px; }
-.intro-line h1 { font: 700 clamp(2.2rem, 1.6rem + 2.4vw, 3.4rem)/1 var(--f-display); letter-spacing: -.035em; }
-.intro-line .lead { font-size: clamp(1rem, .9rem + .4vw, 1.25rem); max-width: none; }
+.intro-line h1 { font: 700 clamp(35.2px, 25.6px + 2.4vw, 54.4px)/1 var(--f-display); letter-spacing: -.035em; }
+.intro-line .lead { font-size: clamp(16px, 14.4px + .4vw, 20px); max-width: none; }
 .cap-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 14px; }
-.sp-hero .hero-title { font: 600 1.05rem/1.4 var(--f-body); letter-spacing: 0; }
-.sp-hero .sub { margin: 0; font-size: 1.05rem; }
+.sp-hero .hero-title { font: 600 16.8px/1.4 var(--f-body); letter-spacing: 0; }
+.sp-hero .sub { margin: 0; font-size: 16.8px; }
 
-.sp-tour h2 { font-size: clamp(1.4rem, 1rem + 1.6vw, 2.3rem); }
+.sp-tour h2 { font-size: clamp(22.4px, 16px + 1.6vw, 36.8px); }
 .sp-text .sp-in { align-content: center; gap: 24px; }
-.sp-text p { font-size: clamp(1.05rem, .95rem + .45vw, 1.3rem); line-height: 1.55; max-width: 62ch; }
+.sp-text p { font-size: clamp(16.8px, 15.2px + .45vw, 20.8px); line-height: 1.55; max-width: 62ch; }
 .sp-text .go { justify-self: start; }
 
 /* install and manual */
@@ -442,7 +442,7 @@ html.deck-on .sp-tour .sp-in { grid-template-rows: auto minmax(0, 1fr); }
 html.deck-on .sp-install, html.deck-on .sp-manual { overflow-y: auto; }
 html.deck-on .sp-install .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 html.deck-on .sp-install .card { padding: 16px; }
-html.deck-on .sp-install .card p { font-size: .92rem; }
+html.deck-on .sp-install .card p { font-size: 14.72px; }
 html.deck-on .pager {
   display: flex; flex-direction: column; gap: 8px;
   position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%);
@@ -464,10 +464,10 @@ section.sp { padding-block: 0; }
   max-width: 1120px; margin: 0 auto; padding-top: 48px;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  font-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+  font-size: clamp(22.4px, 16px + 1.5vw, 35.2px);
 }
 .sp-group .sp { border-top: 0; }
-.sp-tour h2 { font: 500 clamp(1.05rem, .9rem + .6vw, 1.4rem)/1.3 var(--f-body); color: var(--text); }
+.sp-tour h2 { font: 500 clamp(16.8px, 14.4px + .6vw, 22.4px)/1.3 var(--f-body); color: var(--text); }
 .side { display: none; }
 
 html.deck-on .sp-group { height: 100%; overflow: hidden; border-top: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); }
@@ -497,7 +497,7 @@ html.deck-on .sp-tour .sp-in { max-width: min(1500px, 100%); padding-left: 72px;
 .cmd { box-shadow: none; }
 .cmd pre { padding: 7px 12px; font: 500 14px/1.3 var(--f-mono); }
 .copy { min-width: 0; padding: 0 14px; font-size: 12px; }
-.mode-note { max-width: 640px; font-size: .9rem; line-height: 1.45; min-height: 0; margin-top: 8px; }
+.mode-note { max-width: 640px; font-size: 14.4px; line-height: 1.45; min-height: 0; margin-top: 8px; }
 .mode-note[hidden] { display: block; visibility: hidden; }
 
 /* Demo shots: separate cards with rounded corners and a shadow, labels as text. */
@@ -621,7 +621,7 @@ html.deck-on .sp-tour::before {
 
 /* Slogans: big lines at the bottom of a slide that run a little onto its screenshot. */
 .slogan, .sp-tour h2 {
-  font: 700 clamp(1.6rem, .9rem + 2.2vw, 3rem)/1.1 var(--f-display); letter-spacing: -.02em;
+  font: 700 clamp(25.6px, 14.4px + 2.2vw, 48px)/1.1 var(--f-display); letter-spacing: -.02em;
   color: var(--text); text-align: center;
   max-width: 34ch; justify-self: center;
   position: relative; z-index: 2;
@@ -681,7 +681,7 @@ html.deck-on .hint:hover { color: var(--accent); }
 
 /* Slogans as solid frosted plates over the bottom of the screenshot, not glowing text. */
 .slogan, .sp-tour h2 {
-  font: 800 clamp(1.7rem, .9rem + 2.4vw, 3.3rem)/1.05 var(--f-display); letter-spacing: -.03em;
+  font: 800 clamp(27.2px, 14.4px + 2.4vw, 52.8px)/1.05 var(--f-display); letter-spacing: -.03em;
   text-shadow: none; text-wrap: balance;
   max-width: 24ch; padding: .32em .6em .38em; border-radius: 14px;
   background: color-mix(in srgb, var(--page) 74%, transparent);
@@ -693,7 +693,7 @@ html.deck-on .sp-tour h2, html.deck-on .sp-hero .slogan { margin-top: -1em; }
 /* First the stock interface, said quietly; then the answer, loud. */
 .sp-hero:not(.yes) .slogan { font-weight: 700; color: var(--muted); }
 .sp-hero.yes .slogan {
-  font-size: clamp(2rem, 1rem + 3.2vw, 4.4rem);
+  font-size: clamp(32px, 16px + 3.2vw, 70.4px);
   background: var(--accent); color: var(--on-accent);
   box-shadow: 0 16px 60px color-mix(in srgb, var(--accent) 45%, transparent);
 }
@@ -720,7 +720,7 @@ html.deck-on .sp-group, html.deck-on .sp-stack { grid-template-columns: minmax(0
 
 /* Slogans without plates: the bottom of the screenshot fades into the page and the line sits on that fade. */
 .slogan, .sp-tour h2 {
-  font: 800 clamp(1.5rem, .8rem + 1.9vw, 2.7rem)/1.1 var(--f-display); letter-spacing: -.025em;
+  font: 800 clamp(24px, 12.8px + 1.9vw, 43.2px)/1.1 var(--f-display); letter-spacing: -.025em;
   color: var(--text);
   max-width: 30ch; padding: 0; border-radius: 0;
   background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none;
@@ -739,7 +739,7 @@ html.deck-on .shots.row { align-items: flex-end; }
 /* First the stock interface, said quietly; then the answer, in full voice. */
 .sp-hero:not(.yes) .slogan { font-weight: 600; color: var(--muted); }
 .sp-hero.yes .slogan {
-  font-size: clamp(1.9rem, 1rem + 2.8vw, 3.8rem);
+  font-size: clamp(30.4px, 16px + 2.8vw, 60.8px);
   background: none; color: var(--text); box-shadow: none;
 }
 @keyframes pop { from { transform: translateY(.4em); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -766,9 +766,9 @@ html.deck-on .sp-tour h2, html.deck-on .sp-hero .slogan { margin-top: -1.1em; }
 /* The first section opens with plain text: what MyFox is. */
 html.deck-on .sp-stack { grid-template-rows: minmax(0, 1fr); }
 .sp-intro .sp-in { align-content: center; gap: 20px; }
-.sp-intro h1 { font: 800 clamp(3rem, 1.6rem + 6vw, 7rem)/1 var(--f-display); letter-spacing: -.04em; }
-.sp-intro .lead { font-size: clamp(1.15rem, .9rem + .9vw, 1.7rem); line-height: 1.4; max-width: 34ch; }
-.sp-intro .go { justify-self: start; margin-top: 8px; font: inherit; border: 0; cursor: pointer; }
+.sp-intro h1 { font: 800 clamp(48px, 25.6px + 6vw, 112px)/1 var(--f-display); letter-spacing: -.04em; }
+.sp-intro .lead { font-size: clamp(18.4px, 14.4px + .9vw, 27.2px); line-height: 1.4; max-width: 42ch; }
+.sp-intro .go { justify-self: start; margin-top: 8px; font: inherit; border: 0; cursor: pointer; width: 9em; justify-content: center; }
 html.deck-on .sp-hero .sp-in { padding-top: 28px; }
 .sp-hero:not(.yes) .slogan { font-weight: 700; color: var(--text); }
 .sp-hero.yes .slogan { color: var(--accent); font-weight: 900; }
@@ -776,10 +776,10 @@ html.deck-on .sp-hero .sp-in { padding-top: 28px; }
 /* Text-only slides between the shots. */
 .sp-say .sp-in { align-content: center; justify-items: center; }
 .say {
-  font: 800 clamp(2rem, 1rem + 3.4vw, 4.6rem)/1.08 var(--f-display); letter-spacing: -.03em;
+  font: 800 clamp(32px, 16px + 3.4vw, 73.6px)/1.08 var(--f-display); letter-spacing: -.03em;
   text-align: center; max-width: 18ch; text-wrap: balance;
 }
-.sp-hero:not(.yes) .slogan { font-size: clamp(1.3rem, .8rem + 1.5vw, 2.2rem); max-width: 40ch; }
+.sp-hero:not(.yes) .slogan { font-size: clamp(20.8px, 12.8px + 1.5vw, 35.2px); max-width: 40ch; }
 
 /* The opening slides blur as they dissolve into each other. */
 html.deck-on .layers > .sp { filter: blur(14px); transition: opacity .8s ease, filter .8s ease, visibility .8s; }
@@ -807,7 +807,7 @@ html.deck-on .sp-tour .shots.col .shot img { max-height: none; }
    the shots as large as the slide allows once room for the labels and the slogan is kept. */
 html.deck-on .sp-tour .sp-in,
 html.deck-on .sp-tour .sp-in:has(.shots.col) {
-  --cap: 8rem;
+  --cap: 128px;
   container-type: size;
   grid-template-rows: auto auto; align-content: center;
 }
@@ -823,3 +823,15 @@ html.deck-on .sp-tour .shots.col .shot img {
 html.deck-on .shots.row { align-items: flex-start; }
 .foot nav a { display: inline-flex; align-items: center; gap: 7px; }
 .foot nav .gh { width: 1.1em; height: 1.1em; flex: none; }
+
+/* Buttons and tabs keep one width in both languages, so nothing moves when the language
+   changes. Each width fits the longer of the two labels. */
+.tab { width: 156px; min-width: 0; flex: 0 1 156px; }
+.tab[href="#top"] { width: 92px; flex-basis: 92px; }
+.tab[href="#install"] { width: 104px; flex-basis: 104px; }
+.tab > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mode { width: 196px; }
+.mode:nth-child(3) { width: 274px; }
+.copy { width: 120px; }
+.go { justify-content: center; }
+.sp-text .go { width: 304px; }
