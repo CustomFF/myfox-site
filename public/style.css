@@ -159,6 +159,9 @@ body::before {
 }
 .tbtn:hover { background: var(--raise); }
 .tbtn svg { width: 16px; height: 16px; }
+.langs { flex: 0 0 auto; display: inline-flex; gap: 2px; }
+.langs .tbtn { color: var(--muted); font-weight: 500; }
+.langs .tbtn[aria-pressed="true"] { background: var(--raise); color: var(--text); font-weight: 700; cursor: default; }
 
 /* ---------- page card ---------- */
 .page {

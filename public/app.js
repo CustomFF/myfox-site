@@ -17,12 +17,21 @@
     });
   }
 
-  document.getElementById("lang-btn").addEventListener("click", function () {
-    var lang = root.dataset.lang === "ru" ? "en" : "ru";
-    root.dataset.lang = lang; root.lang = lang;
-    store("lang", lang);
-    syncShots();
+  // Both languages are on the switch; the current one is pressed.
+  var langBtns = document.querySelectorAll("[data-set-lang]");
+  function markLang() {
+    langBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.setLang === root.dataset.lang)); });
+  }
+  langBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var lang = btn.dataset.setLang;
+      root.dataset.lang = lang; root.lang = lang;
+      store("lang", lang);
+      markLang();
+      syncShots();
+    });
   });
+  markLang();
   document.getElementById("theme-btn").addEventListener("click", function () {
     var next = theme() === "dark" ? "light" : "dark";
     root.dataset.theme = next;
