@@ -1,5 +1,6 @@
 // myfox.in: one address for both the site and `curl -sL myfox.in | sh`.
-// Browsers get the GitHub Pages site, curl/wget on the root get get.sh.
+// Browsers get the GitHub Pages site, curl/wget on the root get the banner script,
+// which then fetches get.sh from /get.
 
 import ERROR_PAGE from "./error.html";
 import BANNER from "./banner.txt";
@@ -15,15 +16,20 @@ export default {
     }
     const ua = request.headers.get("User-Agent") || "";
 
-    const tool = url.pathname === "/" && ua.match(/^(curl|wget)\//i);
-    if (tool) {
-      // One point per script download, no IP: the tool and the country only.
-      env.INSTALLS?.writeDataPoint({
-        indexes: ["get"],
-        blobs: [tool[1].toLowerCase(), request.cf?.country || ""],
-        doubles: [1],
-      });
+    const tool = ua.match(/^(curl|wget)\//i);
+    // One point per request, no IP: banner = the script was downloaded, run = it ran and asked for get.sh.
+    const count = (kind) => env.INSTALLS?.writeDataPoint({
+      indexes: [kind],
+      blobs: [tool[1].toLowerCase(), request.cf?.country || ""],
+      doubles: [1],
+    });
+    if (tool && url.pathname === "/") {
+      count("banner");
       return script();
+    }
+    if (tool && url.pathname === "/get") {
+      count("run");
+      return getSh();
     }
     return site(request, url);
   },
@@ -32,12 +38,21 @@ export default {
 // Read without `| sh` it is a page to look at: the banner as comments and one line that runs get.sh.
 function script() {
   const banner = BANNER.trimEnd().split("\n").map((l) => ("# " + l).trimEnd()).join("\n");
-  return new Response(`#!/bin/sh\n${banner}\n#\n\ncurl -fsSL ${GET_SH} | sh -s -- "$@"\n`, {
+  return new Response(`#!/bin/sh\n${banner}\n#\n\ncurl -fsSL https://myfox.in/get | sh -s -- "$@"\n`, {
     headers: {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "no-cache",
       vary: "User-Agent",
     },
+  });
+}
+
+// get.sh from GitHub through myfox.in, so a run is counted apart from a look at the banner.
+async function getSh() {
+  const r = await fetch(GET_SH).catch(() => null);
+  if (!r || !r.ok) return new Response("get.sh is unavailable\n", { status: 502 });
+  return new Response(r.body, {
+    headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-cache" },
   });
 }
 
