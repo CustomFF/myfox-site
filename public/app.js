@@ -99,6 +99,32 @@
   dark.addEventListener("change", syncShots);
   syncShots();
 
+  // Before / after: the handle follows the range under it; the label of a side that is
+  // hidden behind the edge goes away. On load the handle swings once, to show it moves.
+  document.querySelectorAll(".cmp").forEach(function (c) {
+    var input = c.querySelector("input");
+    function sync() {
+      var x = Number(input.value);
+      c.style.setProperty("--x", x + "%");
+      c.dataset.edge = x < 12 ? "l" : x > 88 ? "r" : "";
+    }
+    input.addEventListener("input", sync);
+    sync();
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var touched = false, t0 = null;
+    input.addEventListener("pointerdown", function () { touched = true; });
+    setTimeout(function () {
+      requestAnimationFrame(function step(t) {
+        if (touched) return;
+        if (t0 === null) t0 = t;
+        var k = Math.min((t - t0) / 1800, 1);
+        input.value = 50 + 22 * Math.sin(2 * Math.PI * k);
+        sync();
+        if (k < 1) requestAnimationFrame(step);
+      });
+    }, 900);
+  });
+
   // Install mode switches the command everywhere it is shown.
   var modes = document.querySelectorAll("#install .mode");
   modes.forEach(function (btn) {
@@ -190,8 +216,7 @@
     });
     // The arrows turn slides everywhere; they stop at the first and the last slide.
     document.querySelectorAll(".side.prev").forEach(function (b) { b.disabled = at === 0; });
-    // The first slide has its own "Learn more" button instead.
-    document.querySelectorAll(".side.next").forEach(function (b) { b.disabled = at === 0 || at === pages.length - 1; });
+    document.querySelectorAll(".side.next").forEach(function (b) { b.disabled = at === pages.length - 1; });
   }
   function go(i) {
     at = Math.max(0, Math.min(pages.length - 1, i));
@@ -199,9 +224,6 @@
     else pages[at].scrollIntoView({ behavior: "smooth" });
     mark(at);
   }
-  document.querySelectorAll(".more").forEach(function (b) {
-    b.addEventListener("click", function () { go(at + 1); });
-  });
   document.querySelectorAll(".side").forEach(function (b) {
     b.addEventListener("click", function () { go(at + (b.classList.contains("next") ? 1 : -1)); });
   });

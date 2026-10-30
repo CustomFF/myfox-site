@@ -72,10 +72,25 @@
     <div class="layers">
       <section class="sp sp-intro" data-nav="top">
         <div class="sp-in">
-          <h1>MyFox</h1>
-          <p class="lead" lang="ru">MyFox — набор твиков интерфейса Firefox и утилита для их установки и обновления.</p>
-          <p class="lead" lang="en">MyFox is a set of Firefox interface tweaks and a utility for installing and updating them.</p>
-          <button class="go more" type="button"><span lang="ru">Подробнее</span><span lang="en">Learn more</span></button>
+          <div class="intro-text">
+            <h1>MyFox</h1>
+            <p class="lead" lang="ru">MyFox — это переработка интерфейса и настроек Firefox плюс утилита для установки браузера и управления им.</p>
+            <p class="lead" lang="en">MyFox is a rework of the Firefox interface and settings plus a utility that installs the browser and manages it.</p>
+            <p class="sub" lang="ru">Интерфейс становится компактнее и удобнее: вкладки и меню без лишних отступов, загрузки, расширения и переводчик в боковой панели. ИИ-функции и телеметрия по умолчанию выключены.</p>
+            <p class="sub" lang="en">The interface gets more compact and easier to use: tabs and menus without extra padding, downloads, extensions and the translator in the sidebar. AI features and telemetry are off by default.</p>
+            <div class="cmd">
+              <pre><span class="p">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
+              <button class="copy" type="button"><span lang="ru">Копировать</span><span lang="en">Copy</span></button>
+            </div>
+          </div>
+          <figure class="shot cmp">
+            <img data-hero="before" src="img/ru-light-before.webp" width="1878" height="1146" alt="Firefox без твиков">
+            <img class="left" data-hero="after" src="img/ru-light-after.webp" width="1878" height="1146" alt="Firefox с MyFox tweaks">
+            <figcaption class="l a">MyFox tweaks</figcaption>
+            <figcaption class="r b"><span lang="ru">Стандартный Firefox</span><span lang="en">Stock Firefox</span></figcaption>
+            <div class="handle" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M6 4 2 8l4 4M10 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <input type="range" min="0" max="100" value="50" step="0.1" aria-label="MyFox tweaks / Firefox">
+          </figure>
         </div>
       </section>
       <section class="sp sp-say" data-nav="top">

@@ -887,12 +887,74 @@ html.deck-on .shots.row { align-items: flex-start; }
   border-top: 6px solid var(--fold); border-left: 6px solid transparent;
 }
 html.deck-on .shots.row .shot figcaption { bottom: 38%; }
-/* A plain page (phone): the slide buttons are gone (the page scrolls), and the install buttons
+/* A plain page (phone): the install buttons
    take the full width. */
-html:not(.deck-on) .more { display: none; }
 html:not(.deck-on) .sp-text .go { justify-self: center; }
 .sp-text .go { max-width: 100%; }
 @media (max-width: 520px) {
   .mode, .mode:nth-child(3) { width: 100%; }
   .copy { width: auto; padding: 8px 14px; }
 }
+
+/* The first screen: what MyFox is and the install command on one side, the stock Firefox and
+   the same window with MyFox tweaks turning into each other on the other. On a phone the shot
+   comes right after the text, before the command. */
+.sp-intro .sp-in { max-width: 1440px; }
+.intro-text { display: grid; gap: 18px; align-content: center; }
+.sp-intro .lead { max-width: 34ch; }
+.sp-intro .sub { margin: 0; font-size: clamp(16px, 14.4px + .4vw, 19.2px); line-height: 1.5; color: var(--muted); max-width: 52ch; }
+.sp-intro .cmd { max-width: 460px; }
+.sp-intro .go { margin-top: 0; }
+html.deck-on .sp-intro .sp-in {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  column-gap: 56px;
+  align-content: center; align-items: stretch;
+}
+/* The text stands as high as the shot: the name at its top edge, the button at its bottom.
+   The shot sets the height, so nothing moves when the language changes. */
+html.deck-on .sp-intro .intro-text { align-content: space-between; }
+html.deck-on .sp-intro .cmp { align-self: center; }
+html.deck-on .cmp img { max-height: calc(100vh - 200px); width: auto; max-width: 100%; }
+html:not(.deck-on) .intro-text { display: contents; }
+html:not(.deck-on) .sp-intro .cmp { order: 1; }
+html:not(.deck-on) .sp-intro .cmd { order: 2; }
+
+/* After / before: one window, MyFox tweaks left of the handle, the stock Firefox right of it.
+   The handle is dragged sideways. */
+.cmp { position: relative; margin: 0; width: fit-content; max-width: 100%; justify-self: center; user-select: none; touch-action: pan-y; --x: 50%; }
+.cmp img { width: 100%; }
+.cmp .left {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-shadow: none;
+  clip-path: inset(0 calc(100% - var(--x)) 0 0);
+}
+.cmp .handle {
+  position: absolute; top: 0; bottom: 0; left: var(--x); z-index: 2;
+  width: 2px; margin-left: -1px;
+  background: var(--accent);
+  pointer-events: none;
+}
+.cmp .handle svg {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 34px; height: 34px; padding: 8px; border-radius: 50%;
+  background: var(--accent); color: var(--on-accent);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+.cmp input {
+  position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%;
+  margin: 0; opacity: 0; cursor: ew-resize;
+}
+.shot.cmp figcaption { transition: opacity .15s; text-transform: none; letter-spacing: .02em; font-size: 12px; }
+.cmp figcaption.b { background: var(--text); color: var(--page); --fold: color-mix(in srgb, var(--text) 55%, #000); }
+.cmp figcaption.a { background: var(--accent); color: var(--on-accent); --fold: color-mix(in srgb, var(--accent) 55%, #000); }
+/* The right label hangs on the right edge, its end folded behind that edge. */
+.cmp figcaption.r {
+  left: auto; right: -6px;
+  padding: 5px 14px 4px 12px; border-radius: 3px 0 0 3px;
+  box-shadow: -1px 2px 2px rgba(0, 0, 0, .3), -3px 6px 10px rgba(0, 0, 0, .3);
+}
+.cmp figcaption.r::before { left: auto; right: 0; border-left: 0; border-right: 6px solid transparent; }
+.cmp[data-edge="l"] figcaption.l, .cmp[data-edge="r"] figcaption.r { opacity: 0; }
+
+html.deck-on .sp-intro h1 { font-size: clamp(48px, 20px + 5vw, 96px); }
+html.deck-on .sp-intro .lead { font-size: clamp(18px, 12px + 1vw, 24px); }
+html.deck-on .sp-intro .sub { font-size: clamp(15px, 13px + .35vw, 17.6px); }
