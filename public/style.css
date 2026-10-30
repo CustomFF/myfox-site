@@ -956,7 +956,8 @@ html:not(.deck-on) .sp-intro .cmd { order: 2; }
 .cmp[data-edge="l"] figcaption.l, .cmp[data-edge="r"] figcaption.r { opacity: 0; }
 
 /* Install: what the install does, above the command. */
-.sp-install .about { margin: 0; max-width: 80ch; font-size: 16px; line-height: 1.55; }
+.sp-install .about { display: grid; gap: 8px; max-width: 80ch; font-size: 16px; line-height: 1.55; }
+.sp-install .about p { margin: 0; }
 html.deck-on .sp-intro h1 { font-size: clamp(48px, 20px + 5vw, 96px); }
 html.deck-on .sp-intro .lead { font-size: clamp(18px, 12px + 1vw, 24px); }
 html.deck-on .sp-intro .sub { font-size: clamp(15px, 13px + .35vw, 17.6px); }
