@@ -890,6 +890,7 @@ html.deck-on .shots.row .shot figcaption { bottom: 38%; }
 /* A plain page (phone): the slide buttons are gone (the page scrolls), and the install buttons
    take the full width. */
 html:not(.deck-on) .more { display: none; }
+html:not(.deck-on) .sp-text .go { justify-self: center; }
 .sp-text .go { max-width: 100%; }
 @media (max-width: 520px) {
   .mode, .mode:nth-child(3) { width: 100%; }
