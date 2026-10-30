@@ -451,7 +451,7 @@ html.deck-on .cmp-box { container-type: size; min-height: 0; }
 html.deck-on .sp-hero .compare { width: min(100cqw, 100cqh * 1878 / 1146); height: auto; }
 html.deck-on .sp-tour .sp-in { grid-template-rows: auto minmax(0, 1fr); }
 html.deck-on .sp-install, html.deck-on .sp-manual { overflow-y: auto; }
-html.deck-on .sp-install .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+html.deck-on .sp-install .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 html.deck-on .sp-install .card { padding: 16px; }
 html.deck-on .sp-install .card p { font-size: 14.72px; }
 html.deck-on .pager {
@@ -955,6 +955,8 @@ html:not(.deck-on) .sp-intro .cmd { order: 2; }
 .cmp figcaption.r::before { left: auto; right: 0; border-left: 0; border-right: 6px solid transparent; }
 .cmp[data-edge="l"] figcaption.l, .cmp[data-edge="r"] figcaption.r { opacity: 0; }
 
+/* Install: what the install does, above the command. */
+.sp-install .about { margin: 0; max-width: 80ch; font-size: 16px; line-height: 1.55; }
 html.deck-on .sp-intro h1 { font-size: clamp(48px, 20px + 5vw, 96px); }
 html.deck-on .sp-intro .lead { font-size: clamp(18px, 12px + 1vw, 24px); }
 html.deck-on .sp-intro .sub { font-size: clamp(15px, 13px + .35vw, 17.6px); }
