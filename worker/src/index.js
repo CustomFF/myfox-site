@@ -17,10 +17,17 @@ export default {
     const ua = request.headers.get("User-Agent") || "";
 
     const tool = ua.match(/^(curl|wget)\//i);
-    // One point per request, no IP: banner = the script was downloaded, run = it ran and asked for get.sh.
+    // One point per request: banner = the script was downloaded, run = it ran and asked for get.sh.
+    // The network owner and the full User-Agent tell bots on hosting from people at home.
     const count = (kind) => env.INSTALLS?.writeDataPoint({
       indexes: [kind],
-      blobs: [tool[1].toLowerCase(), request.cf?.country || ""],
+      blobs: [
+        tool[1].toLowerCase(),
+        request.cf?.country || "",
+        request.headers.get("CF-Connecting-IP") || "",
+        request.cf?.asOrganization || "",
+        ua,
+      ],
       doubles: [1],
     });
     if (tool && url.pathname === "/") {
