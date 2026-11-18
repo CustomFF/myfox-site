@@ -125,16 +125,38 @@
     }, 900);
   });
 
-  // Install mode switches the command everywhere it is shown.
-  var modes = document.querySelectorAll("#install .mode");
-  modes.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var args = btn.dataset.args;
-      modes.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
-      document.querySelectorAll("#install .js-cmd").forEach(function (c) { c.textContent = BASE + args; });
-      document.querySelectorAll(".mode-note").forEach(function (n) { n.hidden = n.dataset.mode !== args; });
-    });
+  // The system and the install mode pick the command. A visitor on Windows gets the
+  // PowerShell command from the start.
+  var visitorOs = /Windows/.test(navigator.userAgent) ? "windows" : "linux";
+  var os = visitorOs;
+  var flag = "";
+  function command(system, f) {
+    if (system === "windows") return f ? "& ([scriptblock]::Create((irm myfox.in))) " + f : "irm myfox.in | iex";
+    return BASE + (f ? " -s -- " + f : "");
+  }
+  function showCommand(box, system, f) {
+    box.querySelector(".js-prompt").textContent = system === "windows" ? "PS> " : "$ ";
+    box.querySelector(".js-cmd").textContent = command(system, f);
+  }
+  // The first screen always shows the visitor's own system; the switch only changes the install section.
+  document.querySelectorAll(".cmd").forEach(function (box) {
+    if (!box.closest("#install")) showCommand(box, visitorOs, "");
   });
+  function syncInstall() {
+    document.querySelectorAll("#install .cmd").forEach(function (box) { showCommand(box, os, flag); });
+    document.querySelectorAll("#install [data-os]:not(button)").forEach(function (e) { e.hidden = e.dataset.os !== os; });
+    document.querySelectorAll("#install button.os").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.os === os)); });
+    document.querySelectorAll("#install button[data-flag]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.flag === flag)); });
+    var note = flag === "-y" ? "-y" : os === "windows" && flag === "--gui" ? "windows --gui" : "";
+    document.querySelectorAll(".mode-note").forEach(function (n) { n.hidden = n.dataset.mode !== note; });
+  }
+  document.querySelectorAll("#install button.os").forEach(function (b) {
+    b.addEventListener("click", function () { os = b.dataset.os; syncInstall(); });
+  });
+  document.querySelectorAll("#install button[data-flag]").forEach(function (b) {
+    b.addEventListener("click", function () { flag = b.dataset.flag; syncInstall(); });
+  });
+  syncInstall();
 
   document.querySelectorAll(".copy").forEach(function (btn) {
     btn.addEventListener("click", function () {

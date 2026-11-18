@@ -860,6 +860,10 @@ html.deck-on .shots.row { align-items: flex-start; }
 .tab > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mode { width: 196px; }
 .mode:nth-child(3) { width: 274px; }
+.mode.os { width: 120px; }
+.notes { display: grid; }
+.oses + .req { margin-bottom: 12px; }
+.notes .mode-note { grid-area: 1 / 1; }
 .copy { width: 120px; }
 .go { justify-content: center; }
 .sp-text .go { width: 304px; }

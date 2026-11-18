@@ -79,7 +79,7 @@
             <p class="sub" lang="ru">Интерфейс становится компактнее и удобнее: вкладки и меню без лишних отступов, загрузки, расширения и переводчик в боковой панели. ИИ-функции и телеметрия по умолчанию выключены.</p>
             <p class="sub" lang="en">The interface gets more compact and easier to use: tabs and menus without extra padding, downloads, extensions and the translator in the sidebar. AI features and telemetry are off by default.</p>
             <div class="cmd">
-              <pre><span class="p">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
+              <pre><span class="p js-prompt">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
               <button class="copy" type="button"><span lang="ru">Копировать</span><span lang="en">Copy</span></button>
             </div>
           </div>
@@ -221,34 +221,43 @@
     <div class="sp-in install">
       <h2><span lang="ru">Установка</span><span lang="en">Install</span></h2>
       <div class="about" lang="ru">
-        <p>На Linux MyFox устанавливается одной командой. Установщик скачивает официальный Firefox с серверов Mozilla, ставит его в домашнюю папку и применяет MyFox tweaks. Права администратора не нужны.</p>
+        <p>На Linux и Windows MyFox устанавливается одной командой. Установщик скачивает официальный Firefox с серверов Mozilla, ставит его в папку пользователя и применяет MyFox tweaks. Права администратора не нужны.</p>
         <p>Если в системе уже есть Firefox, он остаётся как был. Его профиль можно скопировать в MyFox с закладками, паролями, историей и расширениями. В копии можно сохранить и вход в аккаунт Firefox.</p>
         <p>После установки MyFox обновляет MyFox tweaks и управляет профилями.</p>
-        <p>На Windows и macOS MyFox не работает. MyFox tweaks там можно попробовать установить <a href="https://github.com/CustomFF/myfox-tweaks/blob/master/README.ru.md">вручную</a>, но на этих системах их не проверяли.</p>
+        <p>На macOS MyFox не работает. MyFox tweaks там можно попробовать установить <a href="https://github.com/CustomFF/myfox-tweaks/blob/master/README.ru.md">вручную</a>, но на macOS их не проверяли.</p>
       </div>
       <div class="about" lang="en">
-        <p>On Linux MyFox installs with one command. The installer downloads the official Firefox from Mozilla’s servers, puts it in the home folder and applies MyFox tweaks. No admin rights needed.</p>
+        <p>On Linux and Windows MyFox installs with one command. The installer downloads the official Firefox from Mozilla’s servers, puts it in the user’s folder and applies MyFox tweaks. No admin rights needed.</p>
         <p>A Firefox already on the system stays as it was. Its profile can be copied into MyFox with bookmarks, passwords, history and extensions. The copy can also stay signed in to the Firefox account.</p>
         <p>After the install MyFox updates MyFox tweaks and manages profiles.</p>
-        <p>MyFox does not run on Windows and macOS. MyFox tweaks can be tried there <a href="https://github.com/CustomFF/myfox-tweaks#readme">manually</a>, but they have not been tested on those systems.</p>
+        <p>MyFox does not run on macOS. MyFox tweaks can be tried there <a href="https://github.com/CustomFF/myfox-tweaks#readme">manually</a>, but they have not been tested on macOS.</p>
       </div>
 
       <div>
+        <div class="modes oses" role="group" aria-label="Система">
+          <button class="mode os" type="button" data-os="linux" aria-pressed="true">Linux</button>
+          <button class="mode os" type="button" data-os="windows" aria-pressed="false">Windows</button>
+        </div>
         <div class="req">
-        <span lang="ru">Требования: Linux (x86_64 или aarch64), Python 3.8 или новее, curl.</span><span lang="en">Requirements: Linux (x86_64 or aarch64), Python 3.8 or newer, curl.</span>
+        <span data-os="linux"><span lang="ru">Требования: Linux (x86_64 или aarch64), Python 3.8 или новее, curl.</span><span lang="en">Requirements: Linux (x86_64 or aarch64), Python 3.8 or newer, curl.</span></span>
+        <span data-os="windows" hidden><span lang="ru">Требования: Windows 10 или 11 (x64 или ARM64). Python не нужен, MyFox ставит его сам.</span><span lang="en">Requirements: Windows 10 or 11 (x64 or ARM64). No Python needed, MyFox installs its own.</span></span>
       </div>
-        <p class="modes-lead"><span lang="ru">Выполните команду в терминале.</span><span lang="en">Run the command in a terminal.</span></p>
-        <div class="modes" role="group" aria-label="Режим установщика">
-          <button class="mode" type="button" data-args="" aria-pressed="true"><span lang="ru">Интерактивно, TUI-диалог</span><span lang="en">Interactive, TUI dialog</span></button>
-          <button class="mode" type="button" data-args=" -s -- --gui" aria-pressed="false"><span lang="ru">Интерактивно, GUI-диалог</span><span lang="en">Interactive, GUI dialog</span></button>
-          <button class="mode" type="button" data-args=" -s -- -y" aria-pressed="false"><span lang="ru">Без вопросов, настройки по умолчанию</span><span lang="en">Non-interactive, default settings</span></button>
+        <p class="modes-lead"><span data-os="linux"><span lang="ru">Выполните команду в терминале.</span><span lang="en">Run the command in a terminal.</span></span><span data-os="windows" hidden><span lang="ru">Выполните команду в PowerShell.</span><span lang="en">Run the command in PowerShell.</span></span></p>
+        <div class="modes flags" role="group" aria-label="Режим установщика">
+          <button class="mode" type="button" data-flag="" aria-pressed="true"><span lang="ru">Интерактивно, TUI-диалог</span><span lang="en">Interactive, TUI dialog</span></button>
+          <button class="mode" type="button" data-flag="--gui" aria-pressed="false"><span lang="ru">Интерактивно, GUI-диалог</span><span lang="en">Interactive, GUI dialog</span></button>
+          <button class="mode" type="button" data-flag="-y" aria-pressed="false"><span lang="ru">Без вопросов, настройки по умолчанию</span><span lang="en">Non-interactive, default settings</span></button>
         </div>
         <div class="cmd">
-          <pre><span class="p">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
+          <pre><span class="p js-prompt">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
           <button class="copy" type="button"><span lang="ru">Копировать</span><span lang="en">Copy</span></button>
         </div>
-        <p class="mode-note" data-mode=" -s -- -y" lang="ru" hidden>Установка происходит без взаимодействия с пользователем. Параметры установки по умолчанию, а также флаги для их изменения можно посмотреть в <a href="https://github.com/CustomFF/myfox/wiki/Установка">документации MyFox</a>.</p>
-        <p class="mode-note" data-mode=" -s -- -y" lang="en" hidden>The install runs without user interaction. The default install options and the flags to change them are listed in the <a href="https://github.com/CustomFF/myfox/wiki/Installation">MyFox documentation</a>.</p>
+        <div class="notes">
+          <p class="mode-note" data-mode="-y" lang="ru" hidden>Установка происходит без взаимодействия с пользователем. Параметры установки по умолчанию, а также флаги для их изменения можно посмотреть в <a href="https://github.com/CustomFF/myfox/wiki/Установка">документации MyFox</a>.</p>
+          <p class="mode-note" data-mode="windows --gui" lang="ru" hidden>Окна установщика есть только на x64. На ARM64 установка идёт в консоли.</p>
+          <p class="mode-note" data-mode="windows --gui" lang="en" hidden>The installer windows exist only on x64. On ARM64 the install runs in the console.</p>
+          <p class="mode-note" data-mode="-y" lang="en" hidden>The install runs without user interaction. The default install options and the flags to change them are listed in the <a href="https://github.com/CustomFF/myfox/wiki/Installation">MyFox documentation</a>.</p>
+        </div>
       </div>
 
       <div class="facts">
@@ -257,8 +266,8 @@
           <p lang="en">During the install, the profile of a Firefox already installed can be copied into MyFox, with all its bookmarks, passwords, history, extensions and Firefox account. Later a profile can be copied or moved with the <code>myfox</code> command or on the about:myfox page.</p>
         </div>
         <div class="card">
-          <p lang="ru">В меню ярлыка Firefox, кроме стандартных пунктов, есть настройки, перезапуск Firefox и обновление MyFox. Для управления MyFox используется команда <code>myfox</code>.</p>
-          <p lang="en">Besides the standard items, the Firefox shortcut menu has settings, a Firefox restart and a MyFox update. MyFox is managed with the <code>myfox</code> command.</p>
+          <p lang="ru">В меню ярлыка Firefox, кроме стандартных пунктов, есть настройки, перезапуск Firefox и обновление MyFox. Для управления MyFox используется команда <code>myfox</code>. На Windows вместо меню ярлыка в «Пуске» есть папка MyFox: Firefox, приватный просмотр и обновление MyFox.</p>
+          <p lang="en">Besides the standard items, the Firefox shortcut menu has settings, a Firefox restart and a MyFox update. MyFox is managed with the <code>myfox</code> command. On Windows, instead of the shortcut menu, the Start menu has a MyFox folder with Firefox, private browsing and the MyFox update.</p>
         </div>
         <div class="card">
           <p lang="ru">Firefox обновляется сам. Твики, темы и MyFox обновляются командой <code>myfox refresh</code>, из меню ярлыка или из раздела обновлений на странице about:myfox.</p>
@@ -280,8 +289,8 @@
         </div>
         <div>
           <h3><span lang="ru">Удаление</span><span lang="en">Uninstalling</span></h3>
-          <p lang="ru">По умолчанию при удалении MyFox профиль браузера сохраняется. Это поведение можно изменить, задав параметры в диалоге удаления или через флаги командной строки.</p>
-          <p lang="en">By default, uninstalling MyFox keeps the browser profile. You can change this with the uninstall options, in the dialog or with command-line flags.</p>
+          <p lang="ru">По умолчанию при удалении MyFox профиль браузера сохраняется. Это поведение можно изменить, задав параметры в диалоге удаления или через флаги командной строки. На Windows MyFox можно удалить и в «Параметры → Приложения → MyFox».</p>
+          <p lang="en">By default, uninstalling MyFox keeps the browser profile. You can change this with the uninstall options, in the dialog or with command-line flags. On Windows MyFox can also be uninstalled in Settings → Apps → MyFox.</p>
           <p lang="ru">Параметры установки и удаления описаны в <a href="https://github.com/CustomFF/myfox/wiki/Главная">документации MyFox</a>.</p>
           <p lang="en">The install and uninstall options are described in the <a href="https://github.com/CustomFF/myfox/wiki">MyFox documentation</a>.</p>
         </div>
