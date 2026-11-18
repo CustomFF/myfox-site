@@ -29,7 +29,7 @@
   function markLang() {
     var d = document.querySelector('meta[name="description"]');
     d.content = root.dataset.lang === "ru"
-      ? "MyFox — инструментарий для установки и сопровождения официального Firefox с MyFox tweaks."
+      ? "MyFox – инструментарий для установки и сопровождения официального Firefox с MyFox tweaks."
       : "MyFox is a toolkit for installing and maintaining the official Firefox with MyFox tweaks.";
   }
   markLang();
