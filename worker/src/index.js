@@ -1,12 +1,13 @@
-// myfox.in: one address for both the site and `curl -sL myfox.in | sh`.
+// myfox.in: one address for the site, `curl -sL myfox.in | sh` and `irm myfox.in | iex`.
 // Browsers get the GitHub Pages site, curl/wget on the root get the banner script,
-// which then fetches get.sh from /get.
+// which then fetches get.sh from /get, PowerShell on the root gets get.ps1.
 
 import ERROR_PAGE from "./error.html";
 import BANNER from "./banner.txt";
 
 const SITE = "https://customff.github.io/myfox-site";
 const GET_SH = "https://raw.githubusercontent.com/CustomFF/myfox/master/get.sh";
+const GET_PS1 = "https://raw.githubusercontent.com/CustomFF/myfox/master/get.ps1";
 
 export default {
   async fetch(request, env) {
@@ -24,7 +25,12 @@ export default {
     }
     if (tool && url.pathname === "/get") {
       count(env, request, "run", tool[1].toLowerCase());
-      return getSh();
+      return fromGitHub(GET_SH);
+    }
+    // Both send a Mozilla/5.0 User-Agent ending in WindowsPowerShell/5.1 or PowerShell/7.
+    if (url.pathname === "/" && /PowerShell\//i.test(ua)) {
+      count(env, request, "banner", "powershell");
+      return fromGitHub(GET_PS1, { vary: "User-Agent" });
     }
     return site(request, url, env);
   },
@@ -58,13 +64,12 @@ function script() {
   });
 }
 
-// get.sh from GitHub through myfox.in, so a run is counted apart from a look at the banner.
-async function getSh() {
-  const r = await fetch(GET_SH).catch(() => null);
-  if (!r || !r.ok) return new Response("get.sh is unavailable\n", { status: 502 });
-  return new Response(r.body, {
-    headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-cache" },
-  });
+// An install script from GitHub through myfox.in, so that its download is counted.
+async function fromGitHub(script, extra = {}) {
+  const headers = { "content-type": "text/plain; charset=utf-8", "cache-control": "no-cache", ...extra };
+  const r = await fetch(script).catch(() => null);
+  if (!r || !r.ok) return new Response("The install script is unavailable\n", { status: 502, headers });
+  return new Response(r.body, { headers });
 }
 
 async function site(request, url, env) {
