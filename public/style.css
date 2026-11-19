@@ -352,6 +352,8 @@ footer { padding-block: 40px 48px; border-top: 1px solid var(--line); }
 .foot .cat { width: 44px; height: auto; opacity: .9; }
 .foot .bic { font: 600 16px/1.2 var(--f-display); }
 .foot nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-left: auto; font-size: 14.72px; }
+.foot .policy { margin: 0; font-size: 12.8px; }
+.foot .policy a { color: var(--muted); }
 .foot small { display: block; color: var(--muted); font-size: 12.8px; margin-top: 2px; }
 .cat-ico, .foot .cat { transition: filter .2s; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cat-ico, :root:not([data-theme="light"]) .foot .cat { filter: invert(1); } }
@@ -380,7 +382,6 @@ footer { padding-block: 40px 48px; border-top: 1px solid var(--line); }
 .hero[data-side="before"] .s-after,
 .hero[data-side="after"] .s-before { display: none; }
 .compare .tag { transition: opacity .15s; }
-.modes-lead { margin: 0 0 10px; color: var(--muted); }
 
 
 .go {
@@ -863,7 +864,18 @@ html.deck-on .shots.row { align-items: flex-start; }
 .mode.os { width: 120px; }
 .notes { display: grid; }
 .oses + .req { margin-bottom: 12px; }
+.setup { margin-bottom: 0; }
+.cmd[hidden] { display: none; }
+.intro-get { display: grid; gap: 12px; }
+.intro-get .go[hidden] { display: none; }
+.sp-intro .setup-hero { justify-self: start; width: auto; margin-top: 0; font-weight: 600; }
+.setup { display: grid; }
+.setup[hidden] { display: none; }
+.setup .go { width: 304px; max-width: 100%; justify-self: center; justify-content: center; }
+.setup-note { margin: 8px auto 0; max-width: 560px; text-align: center; color: var(--muted); font-size: 14.4px; line-height: 1.45; }
 .notes .mode-note { grid-area: 1 / 1; }
+.mode-panel .mode-note { margin: 10px auto 0; max-width: 560px; text-align: center; min-height: 0; }
+.mode-panel .mode-note[hidden] { display: none; }
 .copy { width: 120px; }
 .go { justify-content: center; }
 .sp-text .go { width: 304px; }
@@ -921,7 +933,7 @@ html.deck-on .sp-intro .cmp { align-self: center; }
 html.deck-on .cmp img { max-height: calc(100vh - 200px); width: auto; max-width: 100%; }
 html:not(.deck-on) .intro-text { display: contents; }
 html:not(.deck-on) .sp-intro .cmp { order: 1; }
-html:not(.deck-on) .sp-intro .cmd { order: 2; }
+html:not(.deck-on) .sp-intro .intro-get { order: 2; }
 
 /* After / before: one window, MyFox tweaks left of the handle, the stock Firefox right of it.
    The handle is dragged sideways. */
@@ -965,3 +977,46 @@ html:not(.deck-on) .sp-intro .cmd { order: 2; }
 html.deck-on .sp-intro h1 { font-size: clamp(48px, 20px + 5vw, 96px); }
 html.deck-on .sp-intro .lead { font-size: clamp(18px, 12px + 1vw, 24px); }
 html.deck-on .sp-intro .sub { font-size: clamp(15px, 13px + .35vw, 17.6px); }
+
+/* The install modes are MyFox tabs: the chosen one joins the panel with the command below it. */
+.modes.flags { gap: 0; margin-bottom: 0; align-items: stretch; flex-wrap: nowrap; max-width: 688px; }
+.flags .mode {
+  position: relative;
+  flex: 1 1 0; width: auto; min-width: 0; white-space: nowrap;
+  height: auto; min-height: 46px; padding: 7px 12px;
+  background: var(--raise); color: var(--text);
+  border-radius: var(--r) var(--r) 0 0;
+  font: 500 12px/1.3 var(--f-body); text-align: center;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.flags .mode + .mode { margin-left: 3px; }
+.flags .mode:hover { background: color-mix(in srgb, var(--raise) 50%, var(--toolbar)); }
+.flags .mode[aria-pressed="true"] {
+  background: var(--toolbar); color: var(--text); font-weight: 600; z-index: 1;
+  box-shadow: inset 0 2px 0 var(--accent);
+  cursor: default;
+}
+.flags .mode[aria-pressed="true"]::after {
+  content: "";
+  position: absolute; bottom: 0; left: -5px; right: -5px; height: 5px;
+  background:
+    radial-gradient(circle at 0 0, transparent 5px, var(--toolbar) 5.5px) left bottom / 5px 5px no-repeat,
+    radial-gradient(circle at 100% 0, transparent 5px, var(--toolbar) 5.5px) right bottom / 5px 5px no-repeat;
+  pointer-events: none;
+}
+.flags .mode:first-child[aria-pressed="true"]::after { left: 0; background-size: 0 0, 5px 5px; }
+.flags .mode:nth-last-child(1 of :not([hidden]))[aria-pressed="true"]::after { right: 0; background-size: 5px 5px, 0 0; }
+.mode-panel {
+  max-width: 688px; padding: 12px;
+  background: var(--toolbar);
+  border-radius: 0 0 var(--r) var(--r);
+}
+.mode-panel .cmd { max-width: none; }
+.cmd-lead { margin: 0 0 10px; color: var(--muted); }
+.cmd-lead[hidden] { display: none; }
+.dialog-shot { display: block; max-width: 100%; height: auto; margin: 12px auto 0; border-radius: var(--r); box-shadow: 0 4px 18px var(--shadow); }
+.dialog-shot[hidden] { display: none; }
+@media (max-width: 520px) {
+  .flags .mode { padding: 6px 4px; font-size: 11px; }
+}

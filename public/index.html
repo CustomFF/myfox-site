@@ -78,9 +78,12 @@
             <p class="lead" lang="en">MyFox is a rework of the Firefox interface and settings plus a utility that installs the browser and manages it.</p>
             <p class="sub" lang="ru">Интерфейс становится компактнее и удобнее: вкладки и меню без лишних отступов, загрузки, расширения и переводчик в боковой панели. ИИ-функции и телеметрия по умолчанию выключены.</p>
             <p class="sub" lang="en">The interface gets more compact and easier to use: tabs and menus without extra padding, downloads, extensions and the translator in the sidebar. AI features and telemetry are off by default.</p>
-            <div class="cmd">
-              <pre><span class="p js-prompt">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
-              <button class="copy" type="button"><span lang="ru">Копировать</span><span lang="en">Copy</span></button>
+            <div class="intro-get">
+              <div class="cmd">
+                <pre><span class="p js-prompt">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
+                <button class="copy" type="button"><span lang="ru">Копировать</span><span lang="en">Copy</span></button>
+              </div>
+              <a class="go setup-hero" href="https://myfox.in/setup.exe" hidden><span lang="ru">Скачать установщик для Windows</span><span lang="en">Download the Windows installer</span></a>
             </div>
           </div>
           <figure class="shot cmp">
@@ -224,13 +227,13 @@
         <p>На Linux и Windows MyFox устанавливается одной командой. Установщик скачивает официальный Firefox с серверов Mozilla, ставит его в папку пользователя и применяет MyFox tweaks. Права администратора не нужны.</p>
         <p>Если в системе уже есть Firefox, он остаётся как был. Его профиль можно скопировать в MyFox с закладками, паролями, историей и расширениями. В копии можно сохранить и вход в аккаунт Firefox.</p>
         <p>После установки MyFox обновляет MyFox tweaks и управляет профилями.</p>
-        <p>На macOS MyFox не работает. MyFox tweaks там можно попробовать установить <a href="https://github.com/CustomFF/myfox-tweaks/blob/master/README.ru.md">вручную</a>, но на macOS их не проверяли.</p>
+        <p>На macOS MyFox не работает. MyFox tweaks там можно попробовать установить <a href="https://github.com/CustomFF/myfox-tweaks/blob/master/README.ru.md">вручную</a>, но это не проверялось.</p>
       </div>
       <div class="about" lang="en">
         <p>On Linux and Windows MyFox installs with one command. The installer downloads the official Firefox from Mozilla’s servers, puts it in the user’s folder and applies MyFox tweaks. No admin rights needed.</p>
         <p>A Firefox already on the system stays as it was. Its profile can be copied into MyFox with bookmarks, passwords, history and extensions. The copy can also stay signed in to the Firefox account.</p>
         <p>After the install MyFox updates MyFox tweaks and manages profiles.</p>
-        <p>MyFox does not run on macOS. MyFox tweaks can be tried there <a href="https://github.com/CustomFF/myfox-tweaks#readme">manually</a>, but they have not been tested on macOS.</p>
+        <p>MyFox does not run on macOS. MyFox tweaks can be tried there <a href="https://github.com/CustomFF/myfox-tweaks#readme">manually</a>, but this has not been tested.</p>
       </div>
 
       <div>
@@ -242,21 +245,29 @@
         <span data-os="linux"><span lang="ru">Требования: Linux (x86_64 или aarch64), Python 3.8 или новее, curl.</span><span lang="en">Requirements: Linux (x86_64 or aarch64), Python 3.8 or newer, curl.</span></span>
         <span data-os="windows" hidden><span lang="ru">Требования: Windows 10 или 11 (x64 или ARM64).</span><span lang="en">Requirements: Windows 10 or 11 (x64 or ARM64).</span></span>
       </div>
-        <p class="modes-lead"><span data-os="linux"><span lang="ru">Выполните команду в терминале.</span><span lang="en">Run the command in a terminal.</span></span><span data-os="windows" hidden><span lang="ru">Выполните команду в PowerShell.</span><span lang="en">Run the command in PowerShell.</span></span></p>
         <div class="modes flags" role="group" aria-label="Режим установщика">
-          <button class="mode" type="button" data-flag="" aria-pressed="true"><span lang="ru">Интерактивно, TUI-диалог</span><span lang="en">Interactive, TUI dialog</span></button>
-          <button class="mode" type="button" data-flag="--gui" aria-pressed="false"><span lang="ru">Интерактивно, GUI-диалог</span><span lang="en">Interactive, GUI dialog</span></button>
-          <button class="mode" type="button" data-flag="-y" aria-pressed="false"><span lang="ru">Без вопросов, настройки по умолчанию</span><span lang="en">Non-interactive, default settings</span></button>
+          <button class="mode" type="button" data-flag="" aria-pressed="true"><span lang="ru">Интерактивно<br>TUI-диалог</span><span lang="en">Interactive<br>TUI dialog</span></button>
+          <button class="mode" type="button" data-flag="--gui" aria-pressed="false"><span lang="ru">Интерактивно<br>GUI-диалог</span><span lang="en">Interactive<br>GUI dialog</span></button>
+          <button class="mode" type="button" data-flag="-y" aria-pressed="false"><span lang="ru">Автоматически<br>без вопросов</span><span lang="en">Automatic<br>no questions</span></button>
+          <button class="mode" type="button" data-flag="exe" data-os="windows" aria-pressed="false" hidden><span lang="ru">Скачать</span><span lang="en">Download</span></button>
         </div>
-        <div class="cmd">
-          <pre><span class="p js-prompt">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
-          <button class="copy" type="button"><span lang="ru">Копировать</span><span lang="en">Copy</span></button>
-        </div>
-        <div class="notes">
-          <p class="mode-note" data-mode="-y" lang="ru" hidden>Установка происходит без взаимодействия с пользователем. Параметры установки по умолчанию, а также флаги для их изменения можно посмотреть в <a href="https://github.com/CustomFF/myfox/wiki/Установка">документации MyFox</a>.</p>
-          <p class="mode-note" data-mode="windows --gui" lang="ru" hidden>Окна установщика есть только на x64. На ARM64 установка идёт в консоли.</p>
-          <p class="mode-note" data-mode="windows --gui" lang="en" hidden>The installer windows exist only on x64. On ARM64 the install runs in the console.</p>
-          <p class="mode-note" data-mode="-y" lang="en" hidden>The install runs without user interaction. The default install options and the flags to change them are listed in the <a href="https://github.com/CustomFF/myfox/wiki/Installation">MyFox documentation</a>.</p>
+        <div class="mode-panel">
+          <div class="setup" hidden>
+            <a class="go" href="https://myfox.in/setup.exe"><span lang="ru">Скачать установщик</span><span lang="en">Download the installer</span></a>
+            <p class="setup-note"><span lang="ru">Для x64. Установщик пока не подписан, поэтому Windows может показать предупреждение SmartScreen. Чтобы продолжить, в окне SmartScreen нажмите «Подробнее», затем «Выполнить в любом случае».</span><span lang="en">For x64. The installer is not signed yet, so Windows may show a SmartScreen warning. To go on, click “More info” in the SmartScreen window, then “Run anyway”.</span></p>
+          </div>
+          <p class="cmd-lead"><span data-os="linux"><span lang="ru">Выполните команду в терминале.</span><span lang="en">Run the command in a terminal.</span></span><span data-os="windows" hidden><span lang="ru">Выполните команду в PowerShell.</span><span lang="en">Run the command in PowerShell.</span></span></p>
+          <div class="cmd">
+            <pre><span class="p js-prompt">$ </span><code class="js-cmd">curl -sL myfox.in | sh</code></pre>
+            <button class="copy" type="button"><span lang="ru">Копировать</span><span lang="en">Copy</span></button>
+          </div>
+          <div class="notes">
+            <p class="mode-note" data-mode="-y" lang="ru" hidden>Установка происходит без взаимодействия с пользователем. Параметры установки по умолчанию, а также флаги для их изменения можно посмотреть в <a href="https://github.com/CustomFF/myfox/wiki/Установка">документации MyFox</a>.</p>
+            <p class="mode-note" data-mode="windows --gui" lang="ru" hidden>Окна установщика есть только на x64. На ARM64 установка идёт в консоли.</p>
+            <p class="mode-note" data-mode="windows --gui" lang="en" hidden>The installer windows exist only on x64. On ARM64 the install runs in the console.</p>
+            <p class="mode-note" data-mode="-y" lang="en" hidden>The install runs without user interaction. The default install options and the flags to change them are listed in the <a href="https://github.com/CustomFF/myfox/wiki/Installation">MyFox documentation</a>.</p>
+          </div>
+          <img class="dialog-shot" data-dialog="tui" src="img/install/tui-ru.webp" alt="" loading="lazy">
         </div>
       </div>
 
@@ -310,6 +321,7 @@
         <a href="https://github.com/CustomFF/myfox"><svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>MyFox</a>
         <a href="https://github.com/CustomFF/myfox-tweaks"><svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>MyFox tweaks</a>
       </nav>
+      <p class="policy"><a lang="ru" href="https://github.com/CustomFF/myfox/blob/master/README.ru.md#политика-подписи-кода-code-signing-policy">Code signing policy</a><a lang="en" href="https://github.com/CustomFF/myfox#code-signing-policy">Code signing policy</a></p>
     </div>
   </footer>
   </section>

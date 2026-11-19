@@ -24,6 +24,9 @@
     document.querySelectorAll("img[data-part]").forEach(function (img) {
       img.src = "img/parts/" + img.dataset.part + "-" + tail + (img.dataset.k ? "-" + img.dataset.k : "") + ".webp";
     });
+    document.querySelectorAll("img[data-dialog]").forEach(function (img) {
+      if (img.dataset.dialog) img.src = "img/install/" + img.dataset.dialog + "-" + root.dataset.lang + ".webp";
+    });
   }
 
   function markLang() {
@@ -142,11 +145,22 @@
   document.querySelectorAll(".cmd").forEach(function (box) {
     if (!box.closest("#install")) showCommand(box, visitorOs, "");
   });
+  document.querySelectorAll(".setup-hero").forEach(function (a) { a.hidden = visitorOs !== "windows"; });
   function syncInstall() {
-    document.querySelectorAll("#install .cmd").forEach(function (box) { showCommand(box, os, flag); });
-    document.querySelectorAll("#install [data-os]:not(button)").forEach(function (e) { e.hidden = e.dataset.os !== os; });
+    if (os !== "windows" && flag === "exe") flag = "";
+    document.querySelectorAll("#install .cmd").forEach(function (box) {
+      box.hidden = flag === "exe";
+      if (flag !== "exe") showCommand(box, os, flag);
+    });
+    document.querySelectorAll("#install .setup").forEach(function (e) { e.hidden = flag !== "exe"; });
+    document.querySelectorAll("#install .cmd-lead").forEach(function (e) { e.hidden = flag === "exe"; });
+    document.querySelectorAll("#install [data-os]:not(.os)").forEach(function (e) { e.hidden = e.dataset.os !== os; });
     document.querySelectorAll("#install button.os").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.os === os)); });
     document.querySelectorAll("#install button[data-flag]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.flag === flag)); });
+    // The installer dialog for the chosen mode.
+    var dialog = flag === "" ? (os === "windows" ? "tui-win" : "tui") : flag === "--gui" ? (os === "windows" ? "gui-win" : "gui") : "";
+    document.querySelectorAll("img[data-dialog]").forEach(function (img) { img.dataset.dialog = dialog; img.hidden = !dialog; });
+    syncShots();
     var note = flag === "-y" ? "-y" : os === "windows" && flag === "--gui" ? "windows --gui" : "";
     document.querySelectorAll(".mode-note").forEach(function (n) { n.hidden = n.dataset.mode !== note; });
   }
