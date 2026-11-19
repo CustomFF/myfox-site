@@ -1,6 +1,7 @@
 // myfox.in: one address for the site, `curl -sL myfox.in | sh` and `irm myfox.in | iex`.
 // Browsers get the GitHub Pages site, curl/wget on the root get the banner script,
-// which then fetches get.sh from /get, PowerShell on the root gets get.ps1.
+// which then fetches get.sh from /get, PowerShell on the root gets get.ps1,
+// /setup.exe redirects to the Windows installer of the latest release.
 
 import ERROR_PAGE from "./error.html";
 import BANNER from "./banner.txt";
@@ -8,6 +9,7 @@ import BANNER from "./banner.txt";
 const SITE = "https://customff.github.io/myfox-site";
 const GET_SH = "https://raw.githubusercontent.com/CustomFF/myfox/master/get.sh";
 const GET_PS1 = "https://raw.githubusercontent.com/CustomFF/myfox/master/get.ps1";
+const SETUP_EXE = "https://github.com/CustomFF/myfox/releases/latest/download/MyFox-Setup.exe";
 
 export default {
   async fetch(request, env) {
@@ -31,6 +33,11 @@ export default {
     if (url.pathname === "/" && /PowerShell\//i.test(ua)) {
       count(env, request, "banner", "powershell");
       return fromGitHub(GET_PS1, { vary: "User-Agent" });
+    }
+    // A redirect, not a proxy: the release asset is several megabytes.
+    if (url.pathname === "/setup.exe") {
+      if (request.method === "GET") count(env, request, "setup", "exe");
+      return Response.redirect(SETUP_EXE, 302);
     }
     return site(request, url, env);
   },
