@@ -352,8 +352,6 @@ footer { padding-block: 40px 48px; border-top: 1px solid var(--line); }
 .foot .cat { width: 44px; height: auto; opacity: .9; }
 .foot .bic { font: 600 16px/1.2 var(--f-display); }
 .foot nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-left: auto; font-size: 14.72px; }
-.foot .policy { margin: 0; font-size: 12.8px; }
-.foot .policy a { color: var(--muted); }
 .foot small { display: block; color: var(--muted); font-size: 12.8px; margin-top: 2px; }
 .cat-ico, .foot .cat { transition: filter .2s; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cat-ico, :root:not([data-theme="light"]) .foot .cat { filter: invert(1); } }
